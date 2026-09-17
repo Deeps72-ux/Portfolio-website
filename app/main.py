@@ -80,11 +80,12 @@ async def projects():
 @app.post("/api/chat")
 async def chat(payload: dict):
     message = (payload.get("message") or "").strip()
+    history = payload.get("history") or []
     if not message:
         return {"answer": "Please enter a question.", "sources": []}
     if len(message) > 1000:
         return {"answer": "Please keep the question under 1000 characters.", "sources": []}
-    return await rag.answer(message)
+    return await rag.answer(message, history=history)
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 

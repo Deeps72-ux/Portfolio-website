@@ -61,6 +61,8 @@ function addMessage(text, type) {
   return el;
 }
 
+const conversationHistory = [];
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const question = input.value.trim();
@@ -76,17 +78,28 @@ form.addEventListener("submit", async (e) => {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({message: question})
+      body: JSON.stringify({
+        message: question,
+        history: conversationHistory.slice(-8)
+      })
     });
 
     const data = await response.json();
     thinking.remove();
 
-    let answer = data.answer || "I couldn't generate an answer.";
+    const rawAnswer = data.answer || "I couldn't generate an answer.";
+    let displayAnswer = rawAnswer;
     if (data.sources?.length) {
-      answer += "\n\nSources: " + data.sources.join(" · ");
+      displayAnswer += "\n\nSources: " + data.sources.join(" · ");
     }
-    addMessage(answer, "bot");
+    addMessage(displayAnswer, "bot");
+
+    // Track conversational context
+    conversationHistory.push({ role: "user", content: question });
+    conversationHistory.push({ role: "assistant", content: rawAnswer });
+    if (conversationHistory.length > 12) {
+      conversationHistory.splice(0, conversationHistory.length - 12);
+    }
   } catch (error) {
     thinking.textContent = "Sorry, the assistant is temporarily unavailable. Please try again.";
   } finally {

@@ -33,6 +33,8 @@ Persona & Rules:
    - Speak about architecture, workflows, and integrations proudly, but respect confidentiality by not exposing private internal code.
 5. Conversational Engagement:
    - Always conclude your response conversationally with at least one engaging, relevant follow-up question to keep the dialogue going.
+6. Contextual Continuity & Memory:
+   - When the user gives a short response or direct answer (e.g. "yes", "no", "tell me more", "exactly"), interpret it directly in the context of what you just asked or stated in the previous message. Do NOT restart your general introduction if you are already in a specific discussion.
 """
 
 STOPWORDS = {
@@ -194,7 +196,7 @@ class RAGEngine:
             return []
         return self.retriever.retrieve(query, k=k)
 
-    async def answer(self, query: str):
+    async def answer(self, query: str, history: Optional[List[dict]] = None):
         # Re-check key in case user created or updated .env while server was running
         if not self.client:
             self._setup_client()
@@ -208,7 +210,31 @@ class RAGEngine:
                 "sources": [],
             }
 
-        docs = await self.retrieve(query, k=5)
+        # Process and sanitize conversation history
+        sanitized_history: List[dict] = []
+        if history and isinstance(history, list):
+            for turn in history:
+                if isinstance(turn, dict) and "role" in turn and "content" in turn:
+                    r = "user" if turn.get("role") == "user" else "assistant"
+                    c = str(turn.get("content", "")).strip()
+                    if c:
+                        sanitized_history.append({"role": r, "content": c})
+
+        # Contextual query expansion for retrieval:
+        # If user asks a short follow-up (e.g., "yes", "how?", "tell me more"),
+        # combine it with the last user query to retrieve relevant portfolio chunks
+        retrieval_query = query
+        if len(query.split()) <= 4 and sanitized_history:
+            last_user_turn = next(
+                (m["content"] for m in reversed(sanitized_history) if m["role"] == "user"),
+                ""
+            )
+            if last_user_turn:
+                retrieval_query = f"{last_user_turn} {query}".strip()
+
+        docs = await self.retrieve(retrieval_query, k=5)
+        if not docs and retrieval_query != query:
+            docs = await self.retrieve(query, k=5)
         if not docs:
             return {
                 "answer": "I don't have enough portfolio information to answer that reliably.",
@@ -219,19 +245,19 @@ class RAGEngine:
             f"Source: {d['source']}\n{d['text']}" for d in docs
         )
 
-        user_prompt = f"""Portfolio context:
+        system_instruction = f"""{SYSTEM_PROMPT}
 
-{context}
+Portfolio Context:
+{context}"""
 
-Visitor's question:
-{query}
+        messages = [{"role": "system", "content": system_instruction}]
 
-Answer in the first person ("I", "my") as Deepan's digital twin using the context above. Always conclude your answer conversationally with at least one relevant follow-up question."""
+        # Append recent conversation history (last 6 turns for conversational context)
+        if sanitized_history:
+            messages.extend(sanitized_history[-6:])
 
-        messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
-        ]
+        # Append current user question
+        messages.append({"role": "user", "content": query})
 
         candidate_models = [self.model]
         if self.provider == "groq":
