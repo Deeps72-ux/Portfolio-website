@@ -39,6 +39,7 @@ if (themeToggle) {
 }
 
 function showChat(question = "") {
+  unlockMobileAudio();
   overlay.classList.add("open");
   if (question) {
     input.value = question;
@@ -62,7 +63,10 @@ overlay.addEventListener("click", (e) => {
 });
 
 document.querySelectorAll("[data-question]").forEach(btn => {
-  btn.addEventListener("click", () => showChat(btn.dataset.question));
+  btn.addEventListener("click", () => {
+    unlockMobileAudio();
+    showChat(btn.dataset.question);
+  });
 });
 
 function addMessage(text, type) {
@@ -78,7 +82,7 @@ const conversationHistory = [];
 let isGenerating = false;
 
 /* =========================================================================
-   VOICE MODE & STRICT MALE VOICE ENGINE (SOUTH INDIAN / CHENNAI FOCUS)
+   VOICE MODE & MOBILE-OPTIMIZED MALE VOICE ENGINE
    ========================================================================= */
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -90,14 +94,36 @@ let isSpeaking = false;
 let recognition = null;
 let currentUtterance = null;
 let activeSpeakingEl = null;
+let isAudioUnlocked = false;
 
-// Explicit filter to prevent ANY female voice from being chosen
+// Mobile Autoplay Audio Unlock: Pre-warms SpeechSynthesis on user touch/click
+function unlockMobileAudio() {
+  if (!synth) return;
+  if (!isAudioUnlocked) {
+    try {
+      const silent = new SpeechSynthesisUtterance(" ");
+      silent.volume = 0.01;
+      silent.rate = 10;
+      synth.speak(silent);
+      isAudioUnlocked = true;
+    } catch (_) {}
+  }
+  if (synth.paused) {
+    synth.resume();
+  }
+}
+
+// Global user touch unlock
+document.addEventListener("touchstart", () => unlockMobileAudio(), { passive: true });
+document.addEventListener("click", () => unlockMobileAudio(), { passive: true });
+
+// Filter out all female voices
 const FEMALE_IDENTIFIERS = [
   "female", "woman", "girl", "neerja", "pallavi", "heera", "priya", "zira", 
   "swara", "shreya", "ananya", "aarohi", "kavya", "leila", "geeta", "veena", 
   "sita", "lekha", "sangeeta", "jenny", "aria", "ava", "emma", "samantha", 
   "victoria", "karen", "moira", "fiona", "tessa", "alice", "hazel", "susan",
-  "dina", "chiara", "elena", "luciana", "mia", "steffi"
+  "dina", "chiara", "elena", "luciana", "mia", "steffi", "kendra", "joanna"
 ];
 
 function isFemaleVoice(v) {
@@ -109,6 +135,16 @@ let cachedVoices = [];
 function getAvailableMaleVoices() {
   if (!synth) return [];
   if (!cachedVoices.length) cachedVoices = synth.getVoices();
+  // Filter for male voices that speak English (so mobile phones can synthesize English words)
+  const englishMale = cachedVoices.filter(v => {
+    const lang = (v.lang || "").toLowerCase();
+    const isEnglish = lang.startsWith("en");
+    return isEnglish && !isFemaleVoice(v);
+  });
+  
+  if (englishMale.length > 0) return englishMale;
+
+  // Fallback: any voice that is not explicitly female
   return cachedVoices.filter(v => !isFemaleVoice(v));
 }
 
@@ -116,7 +152,7 @@ function getSelectedOrBestMaleVoice() {
   const maleVoices = getAvailableMaleVoices();
   if (!maleVoices.length) return cachedVoices[0] || null;
 
-  // 1. If user selected a specific voice from dropdown
+  // 1. User selected from dropdown
   if (voiceSelect && voiceSelect.value) {
     const chosen = maleVoices.find(v => v.name === voiceSelect.value);
     if (chosen) return chosen;
@@ -129,48 +165,34 @@ function getSelectedOrBestMaleVoice() {
     if (chosen) return chosen;
   }
 
-  // 3. Tamil / Chennai Male voices (e.g. Valluvar, Surya, Karthik, Sarvesh, ta-IN male)
-  const tamilMale = maleVoices.find(v => {
-    const name = v.name.toLowerCase();
-    const lang = (v.lang || "").toLowerCase().replace("_", "-");
-    const isTamil = lang.includes("ta-in") || lang.includes("ta") || name.includes("tamil");
-    const isMale = name.includes("valluvar") || name.includes("surya") || name.includes("karthik") || name.includes("male");
-    return isTamil && (isMale || !name.includes("pallavi"));
-  });
-  if (tamilMale) return tamilMale;
-
-  // 4. Other South Indian male voices (Telugu Mohan, Kannada Gagan, Malayalam Midhun)
-  const southIndianMale = maleVoices.find(v => {
-    const name = v.name.toLowerCase();
-    const lang = (v.lang || "").toLowerCase().replace("_", "-");
-    return lang.includes("te-in") || lang.includes("kn-in") || lang.includes("ml-in") ||
-           name.includes("mohan") || name.includes("gagan") || name.includes("midhun");
-  });
-  if (southIndianMale) return southIndianMale;
-
-  // 5. Indian English male voice (e.g. Ravi, Rishi, Karan) - strictly male
+  // 3. Indian English Male Voice (e.g. Rishi on iOS/Mac, Google English India on Android, Ravi on Windows)
   const indianEnglishMale = maleVoices.find(v => {
     const name = v.name.toLowerCase();
     const lang = (v.lang || "").toLowerCase().replace("_", "-");
-    const isIndian = lang.includes("en-in") || name.includes("india");
-    const isMale = name.includes("ravi") || name.includes("rishi") || name.includes("karan") || name.includes("male");
+    const isIndian = lang.includes("en-in") || name.includes("india") || name.includes("indian");
+    const isMale = name.includes("rishi") || name.includes("ravi") || name.includes("karan") || name.includes("male");
     return isIndian && isMale && !name.includes("prabhat");
   });
   if (indianEnglishMale) return indianEnglishMale;
 
-  // 6. Any other Indian Male voice
+  // 4. Any Indian English Male
   const anyIndianMale = maleVoices.find(v => {
+    const lang = (v.lang || "").toLowerCase().replace("_", "-");
+    const name = v.name.toLowerCase();
+    return (lang.includes("en-in") || name.includes("india")) && !name.includes("prabhat");
+  }) || maleVoices.find(v => {
     const lang = (v.lang || "").toLowerCase().replace("_", "-");
     return lang.includes("en-in") || v.name.toLowerCase().includes("india");
   });
   if (anyIndianMale) return anyIndianMale;
 
-  // 7. System high-quality English male voices (David, Mark, George, Guy, Ryan)
-  const systemMale = maleVoices.find(v => {
+  // 5. High-quality natural English male voice (Daniel on iOS, Google US English Male on Android, David on Windows)
+  const qualityMale = maleVoices.find(v => {
     const name = v.name.toLowerCase();
-    return name.includes("david") || name.includes("mark") || name.includes("george") || name.includes("guy") || name.includes("ryan");
+    return name.includes("daniel") || name.includes("rishi") || name.includes("david") || 
+           name.includes("mark") || name.includes("george") || name.includes("guy") || name.includes("ryan");
   });
-  if (systemMale) return systemMale;
+  if (qualityMale) return qualityMale;
 
   return maleVoices[0];
 }
@@ -189,7 +211,9 @@ function populateVoiceDropdown() {
     const cleanName = v.name
       .replace("Microsoft ", "")
       .replace(" Online (Natural)", "")
-      .replace(" Desktop", "");
+      .replace(" Desktop", "")
+      .replace(" English (India)", " (IN)")
+      .replace(" English (United States)", " (US)");
     opt.textContent = `${cleanName} [Male]`;
     if (best && v.name === best.name) {
       opt.selected = true;
@@ -205,7 +229,9 @@ function populateVoiceDropdown() {
 function loadVoices() {
   if (synth) {
     cachedVoices = synth.getVoices();
-    populateVoiceDropdown();
+    if (cachedVoices.length > 0) {
+      populateVoiceDropdown();
+    }
   }
 }
 loadVoices();
@@ -251,10 +277,11 @@ function initRecognition() {
   const rec = new SpeechRecognition();
   rec.continuous = false;
   rec.interimResults = true;
-  rec.lang = "en-US";
+  rec.lang = "en-IN"; // English (India) for South Indian speech recognition
 
   rec.onstart = () => {
     isListening = true;
+    unlockMobileAudio();
     updateVoiceUI("listening");
   };
 
@@ -276,6 +303,7 @@ function initRecognition() {
 
     if (finalTranscript) {
       input.value = finalTranscript.trim();
+      unlockMobileAudio();
       updateVoiceUI("processing");
       setTimeout(() => {
         form.requestSubmit();
@@ -287,7 +315,7 @@ function initRecognition() {
     console.warn("Speech recognition error:", event.error);
     isListening = false;
     if (event.error === "not-allowed") {
-      alert("Microphone permission was denied. Please allow microphone access in your browser to use voice mode.");
+      alert("Microphone permission was denied. Please allow microphone access in your mobile browser settings.");
       setVoiceMode(false);
     } else if (event.error === "no-speech") {
       if (isVoiceMode && !isSpeaking && !isGenerating) {
@@ -319,8 +347,9 @@ function initRecognition() {
 recognition = initRecognition();
 
 function startListening() {
+  unlockMobileAudio();
   if (!SpeechRecognition) {
-    alert("Speech recognition is not supported in this browser. Please open the website in Google Chrome or Microsoft Edge.");
+    alert("Speech recognition is not supported in this mobile browser. Please open the portfolio in Google Chrome or Safari.");
     setVoiceMode(false);
     return;
   }
@@ -348,12 +377,17 @@ function stopListening() {
   isListening = false;
 }
 
-// Speak assistant response using Male voice
+// Speak assistant response using Male voice (Mobile & Desktop Compatible)
 function speakAssistantResponse(rawText, messageElement = null) {
   if (!synth) return;
+  
+  // Make sure mobile synth is unpaused
+  if (synth.paused) {
+    synth.resume();
+  }
   synth.cancel();
 
-  // Strip markdown, backticks, asterisks, URLs and sources
+  // Clean text
   let speechText = rawText
     .replace(/```[\s\S]*?```/g, "Code block omitted.")
     .replace(/`([^`]+)`/g, "$1")
@@ -370,21 +404,23 @@ function speakAssistantResponse(rawText, messageElement = null) {
   }
 
   currentUtterance = new SpeechSynthesisUtterance(speechText);
+  // Attach to window so mobile browsers don't garbage-collect it mid-speech!
+  window._activeUtterance = currentUtterance;
+
+  // Language assignment for mobile
+  currentUtterance.lang = "en-IN";
+
   const voice = getSelectedOrBestMaleVoice();
   if (voice) {
     currentUtterance.voice = voice;
+    if (voice.lang) {
+      currentUtterance.lang = voice.lang;
+    }
   }
 
   // Pitch & Cadence tuning for South Indian male delivery
-  const voiceName = (voice?.name || "").toLowerCase();
-  const voiceLang = (voice?.lang || "").toLowerCase();
-  if (voiceLang.includes("ta") || voiceName.includes("valluvar")) {
-    currentUtterance.rate = 1.02;
-    currentUtterance.pitch = 0.98;
-  } else {
-    currentUtterance.rate = 1.05;
-    currentUtterance.pitch = 0.98; // Solid, natural male pitch
-  }
+  currentUtterance.rate = 1.04;
+  currentUtterance.pitch = 0.98;
 
   currentUtterance.onstart = () => {
     isSpeaking = true;
@@ -398,6 +434,7 @@ function speakAssistantResponse(rawText, messageElement = null) {
   currentUtterance.onend = () => {
     isSpeaking = false;
     currentUtterance = null;
+    window._activeUtterance = null;
     if (activeSpeakingEl) {
       activeSpeakingEl.classList.remove("speaking");
       activeSpeakingEl = null;
@@ -415,9 +452,10 @@ function speakAssistantResponse(rawText, messageElement = null) {
   };
 
   currentUtterance.onerror = (e) => {
-    console.warn("Speech synthesis error:", e);
+    console.warn("Speech synthesis error on mobile:", e);
     isSpeaking = false;
     currentUtterance = null;
+    window._activeUtterance = null;
     if (activeSpeakingEl) {
       activeSpeakingEl.classList.remove("speaking");
       activeSpeakingEl = null;
@@ -429,6 +467,10 @@ function speakAssistantResponse(rawText, messageElement = null) {
     }
   };
 
+  // Mobile safety resume right before speaking
+  if (synth.paused) {
+    synth.resume();
+  }
   synth.speak(currentUtterance);
 }
 
@@ -438,6 +480,7 @@ function stopSpeaking() {
   }
   isSpeaking = false;
   currentUtterance = null;
+  window._activeUtterance = null;
   if (activeSpeakingEl) {
     activeSpeakingEl.classList.remove("speaking");
     activeSpeakingEl = null;
@@ -455,6 +498,7 @@ function stopVoiceAndSpeech() {
 }
 
 function setVoiceMode(enabled) {
+  unlockMobileAudio();
   isVoiceMode = enabled;
   if (voiceToggle) {
     voiceToggle.classList.toggle("active", enabled);
@@ -476,6 +520,7 @@ function setVoiceMode(enabled) {
 // Voice Toggle Click
 if (voiceToggle) {
   voiceToggle.addEventListener("click", () => {
+    unlockMobileAudio();
     setVoiceMode(!isVoiceMode);
   });
 }
@@ -483,6 +528,7 @@ if (voiceToggle) {
 // Push-to-talk Mic Button in chat form
 if (micBtn) {
   micBtn.addEventListener("click", () => {
+    unlockMobileAudio();
     if (isListening) {
       stopListening();
       updateVoiceUI(isVoiceMode ? "idle" : "hidden");
@@ -518,6 +564,8 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const question = input.value.trim();
   if (!question) return;
+
+  unlockMobileAudio();
 
   // Interrupt ongoing speech if user submits a new question
   if (isSpeaking) {
@@ -565,6 +613,8 @@ form.addEventListener("submit", async (e) => {
 
     // Voice response if Voice Mode is active
     if (isVoiceMode) {
+      // Mobile check: ensure synth is active
+      unlockMobileAudio();
       speakAssistantResponse(rawAnswer, botMsgEl);
     }
   } catch (error) {
