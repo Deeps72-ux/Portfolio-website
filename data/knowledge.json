@@ -1,0 +1,70 @@
+[
+  {
+    "source": "Profile",
+    "text": "Deepan Kulandaisami is a Software Engineer focused on backend systems, AI/ML and full-stack application development. His professional backend experience includes Python, Django, FastAPI, PostgreSQL, REST APIs, React, JavaScript/TypeScript, Docker, Git, WebSockets and Server-Sent Events. He has hands-on experience building AI agents, RAG pipelines, LLM integrations, document processing, embeddings, vector search and natural-language-to-SQL workflows."
+  },
+  {
+    "source": "Professional Experience",
+    "text": "Deepan has worked as an Associate Software Developer developing enterprise backend systems and AI solutions. His work includes requirements understanding, backend development, AI agent workflows, integrations, testing, debugging and deployment support. His professional experience spans backend APIs, databases, authentication, real-time communication and AI-powered enterprise applications."
+  },
+  {
+    "source": "Enterprise Multi-Agent Platform",
+    "text": "The Enterprise Multi-Agent Platform is an AI system comprising domain-specific agents for HR operations, supply-chain traceability, invoice management, customer engagement, architecture generation and web intelligence. Deepan designed and implemented multi-agent workflows using LangGraph and LLM orchestration patterns; developed backend services with Django, FastAPI, PostgreSQL and Supabase; built React and TypeScript integrations; worked with Keycloak and Microsoft Azure AD/MSAL; maintained Postman automated tests; used Docker; migrated vector search from FAISS to Milvus; and built document ingestion pipelines using PyMuPDF, LlamaIndex and Docling."
+  },
+  {
+    "source": "HR Operations Agent",
+    "text": "The HR Operations Agent is a multimodal RAG-based assistant integrated with enterprise HR APIs. It supports employee profile search, leave/PTO lookup, employee details retrieval and leave information processing. Deepan worked on intelligent routing between employee-related and leave-related queries."
+  },
+  {
+    "source": "Invoice & SQL Analytics Agent",
+    "text": "The Invoice & SQL Analytics Agent is an autonomous SQL agent for invoice analytics. Deepan worked on schema discovery, metadata caching, natural-language-to-SQL generation, query validation, correction workflows and retry mechanisms. The workflow generates and executes SQL against PostgreSQL invoice databases and uses failures as feedback for correction."
+  },
+  {
+    "source": "Supply Chain Traceability Agent",
+    "text": "The Supply Chain Traceability Agent is an AI assistant for food supply-chain traceability and compliance. It supports batch tracking, shipment monitoring, supplier analysis and alert investigation. Deepan worked on SQL generation for multi-table joins and pattern-based search strategies."
+  },
+  {
+    "source": "Specialized Enterprise Agents",
+    "text": "Specialized Enterprise Agents include a Customer Agent for sales and support workflows (demo requests, quotation requests, contact collection, support routing), a Web Search Agent integrating real-time external search with source attribution, and a Diagram Agent converting textual requirements into Mermaid flowcharts and architecture diagrams with rendering workflows."
+  },
+  {
+    "source": "Onelign AI Studio",
+    "text": "Onelign AI Studio is an enterprise AI workspace with specialized agents for document intelligence, legal workflows, architecture design, web search, SQL analytics, voice interactions and knowledge retrieval. Deepan integrated and orchestrated AI agents, developed FastAPI and Django APIs, built retrieval and workflow mechanisms, implemented WebSocket-based real-time interactions and integrated external AI and search services."
+  },
+  {
+    "source": "Onelign AI Studio - Agents",
+    "text": "Onelign included Athena, an enterprise RAG assistant; Argus Search, a source-backed real-time web search agent; Atlas Query, a natural-language SQL analytics agent; Architect AI for architecture generation; NDA Generator and NDA Analyzer for legal workflows; MSA Generator; Patent Agent; VoxTranscribe for real-time voice/transcription over WebSockets; and EchoMind for audio intelligence."
+  },
+  {
+    "source": "AI Proposal Automation Platform",
+    "text": "The AI Proposal Automation Platform is an enterprise system for sales proposal and RFP workflows. Deepan developed FastAPI backend workflows, RFP and proposal generator agents, Action Card-based AI assistance, AI-assisted business document generation, export functionality for PDF/DOCX/PPT/images, real-time editing, and image generation/editing capabilities using OpenAI APIs and Stable Diffusion."
+  },
+  {
+    "source": "Face Recognition & Geo-Mapping",
+    "text": "The Face Recognition & Geo-Mapping platform combines facial embeddings, vector similarity search, authentication and geospatial mapping. Deepan investigated and resolved OAuth authentication and authorization issues, debugged integration problems across authentication providers and backend services, assisted with deployment validation and production troubleshooting, and contributed to root-cause analysis of access-control defects. Technologies included Python, FastAPI, Pinecone, OAuth, REST APIs, PostgreSQL and Docker."
+  },
+  {
+    "source": "Cricket Analyzer Agent",
+    "text": "The Cricket Analyzer Agent is an in-progress AI/ML decision-support platform for match strategy, player selection, simulation and post-match analysis. Deepan has contributed to FastAPI/Python backend workflows, IPL data ETL, match-state tracking, feature engineering, model integration, analytics APIs and Monte Carlo simulation. Models include toss prediction, playing XI recommendation, batting-order optimization, bowling strategy, field placement, target-score prediction and chase strategy."
+  },
+  {
+    "source": "Recent Learning",
+    "text": "Deepan recently learned vLLM and explored LLM model serving and deployment. He studied practical inference considerations including API-based model serving, GPU utilization, batching, inference latency and resource management. This expanded his understanding from consuming hosted LLM APIs toward the deployment and serving side of generative AI."
+  },
+  {
+    "source": "Technical Approach",
+    "text": "Deepan prefers treating LLMs as one component of a larger software system rather than assuming model output is automatically correct. His AI engineering approach includes retrieval, schema/context preparation, validation, execution feedback, retries, error handling and debugging across model, backend, API and database layers."
+  },
+  {
+    "source": "C++ and Systems",
+    "text": "Deepan has working knowledge of C++, data structures and algorithms, object-oriented programming, STL, memory management, RAII, smart pointers, multithreading and concurrency. He also has working knowledge of TCP/IP networking and packet analysis with Wireshark."
+  },
+  {
+    "source": "Education",
+    "text": "Deepan completed a B.Tech in Electrical and Electronics Engineering from NITK Surathkal from 2020 to 2024, along with a minor in Mathematical & Computational Sciences."
+  },
+  {
+    "source": "Certifications",
+    "text": "Deepan holds Microsoft Azure certifications AZ-900 and AZ-204."
+  }
+]

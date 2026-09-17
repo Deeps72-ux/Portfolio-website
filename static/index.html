@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Deepan Kulandaisami — Software Engineer portfolio">
+  <title>Deepan Kulandaisami | Software Engineer</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script>
+    (function () {
+      const saved = localStorage.getItem("theme");
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.setAttribute("data-theme", saved || (prefersLight ? "light" : "dark"));
+    })();
+  </script>
+</head>
+
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="#home">DK</a>
+      <div class="nav-right">
+        <nav>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+          <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">SOFTWARE ENGINEER · AI · BACKEND · FULL STACK</p>
+        <h1>Building software that<br><span>solves real problems.</span></h1>
+        <p class="lead">
+          Software Engineer working across Python backend systems, AI agents,
+          RAG pipelines and full-stack applications.
+        </p>
+        <div class="buttons">
+          <a class="btn primary" href="#projects">View projects</a>
+          <a class="btn secondary" href="https://github.com/Deeps72-ux" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="ask-card">
+        <div class="ask-header">
+          <div class="bot-icon">✦</div>
+          <div>
+            <strong>Ask Deepan</strong>
+            <span>AI portfolio assistant</span>
+          </div>
+          <span class="online">●</span>
+        </div>
+        <p class="ask-intro">Have a question about my experience, projects or technical skills?</p>
+        <div class="suggestions">
+          <button data-question="What AI projects has Deepan worked on?">What AI projects has Deepan worked on?</button>
+          <button data-question="Tell me about his natural-language-to-SQL agent.">Tell me about the SQL agent.</button>
+          <button data-question="What backend technologies does Deepan use?">What backend technologies does he
+            use?</button>
+        </div>
+        <button class="open-chat" id="openChat">Ask a question <span>→</span></button>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-label">01 / ABOUT</div>
+      <div class="about-grid">
+        <div>
+          <h2>Software engineer first.<br>AI enthusiast by choice.</h2>
+        </div>
+        <div class="about-text">
+          <p>
+            Experience building backend services and AI-powered applications using
+            Python, FastAPI, Django, PostgreSQL, React and TypeScript.
+          </p>
+          <p>
+            Hands-on work includes RAG pipelines, AI agents, LLM integrations,
+            document processing, vector search, natural-language-to-SQL workflows,
+            real-time APIs and enterprise integrations.
+          </p>
+          <p>
+            Interested in understanding what happens beneath abstractions and in
+            building software that remains useful and reliable when real-world
+            inputs are messy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects-section">
+      <div class="section-label">02 / SELECTED WORK</div>
+      <div class="section-heading">
+        <h2>Things I've built.</h2>
+        <p>Professional projects and engineering work across AI, backend systems and analytics.</p>
+      </div>
+      <div class="project-grid" id="projectGrid"></div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-label">03 / TOOLKIT</div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h3>Backend</h3>
+          <p>Python · FastAPI · Django · REST APIs · PostgreSQL · WebSockets · SSE · Celery</p>
+        </div>
+        <div class="skill-group">
+          <h3>AI / ML</h3>
+          <p>RAG · AI Agents · LangGraph · LangChain · LLM APIs · Embeddings · Vector Search · scikit-learn</p>
+        </div>
+        <div class="skill-group">
+          <h3>Frontend</h3>
+          <p>JavaScript · TypeScript · React · HTML · CSS</p>
+        </div>
+        <div class="skill-group">
+          <h3>Infrastructure</h3>
+          <p>Docker · Azure · Git · Postman · Keycloak · OAuth · Microsoft Azure AD</p>
+        </div>
+        <div class="skill-group">
+          <h3>Systems</h3>
+          <p>C++ · DSA · OOP · Multithreading · Concurrency · TCP/IP · Wireshark</p>
+        </div>
+        <div class="skill-group">
+          <h3>Recently explored</h3>
+          <p>vLLM · LLM serving · Model deployment · Inference optimization</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section philosophy">
+      <div class="section-label">04 / ENGINEERING MINDSET</div>
+      <div class="principles">
+        <article><span>01</span>
+          <h3>Understand the problem</h3>
+          <p>Start with the user's actual workflow and desired outcome before choosing a technology.</p>
+        </article>
+        <article><span>02</span>
+          <h3>Make AI reliable</h3>
+          <p>Use context, validation, feedback and failure handling instead of treating model output as truth.</p>
+        </article>
+        <article><span>03</span>
+          <h3>Debug systematically</h3>
+          <p>Trace failures across the full request path instead of assuming the first failing component is the root
+            cause.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="section-label">05 / CONTACT</div>
+      <h2>Let's build something useful.</h2>
+      <p>Open to software engineering opportunities across backend, AI and full-stack development.</p>
+      <div class="contact-links">
+        <a href="mailto:deepksami@gmail.com">Email ↗</a>
+        <a href="https://www.linkedin.com/in/deepanks/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/Deeps72-ux" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Deepan Kulandaisami</footer>
+
+  <div class="chat-overlay" id="chatOverlay">
+    <div class="chat-window">
+      <div class="chat-top">
+        <div><strong>Ask Deepan</strong><small>Grounded in portfolio information</small></div>
+        <button id="closeChat" aria-label="Close">×</button>
+      </div>
+      <div class="messages" id="messages">
+        <div class="message bot">Hi! Ask me about Deepan's projects, backend experience, AI work, technologies or
+          engineering approach.</div>
+      </div>
+      <div class="chat-suggestions">
+        <button data-question="What is Deepan's experience with FastAPI?">FastAPI experience?</button>
+        <button data-question="What did Deepan contribute to the Enterprise Multi-Agent Platform?">Multi-Agent
+          Platform?</button>
+        <button data-question="Does Deepan have experience with model deployment?">Model deployment?</button>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <input id="chatInput" autocomplete="off" placeholder="Ask a question..." maxlength="1000">
+        <button type="submit">↑</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+
+</html>
