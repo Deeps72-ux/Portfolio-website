@@ -1,0 +1,54 @@
+[
+  {
+    "id": "18062169-8e48-4c25-9c6c-15ad193a2666",
+    "timestamp": "2026-09-17T19:46:10.801051Z",
+    "name": "Rahul Rathkar",
+    "email": "test1@gmail.com",
+    "company": "Testing1",
+    "message": "Hiring for full stack developer",
+    "transcript": [
+      {
+        "role": "user",
+        "content": "Hi! I'd like to discuss an AI/Backend consulting or freelance project."
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! I'd be happy to connect you with Deepan for your AI/Backend consulting project. Could you please share your full name and email address so he can get back to you?"
+      },
+      {
+        "role": "user",
+        "content": "Rahul Rathkar"
+      },
+      {
+        "role": "assistant",
+        "content": "Thanks, Rahul! Could you please share your email address so Deepan can reach out to you?"
+      },
+      {
+        "role": "user",
+        "content": "deepksami+test1@gmail.com"
+      },
+      {
+        "role": "assistant",
+        "content": "Thanks, Rahul! I have your name and email. Could you please share your company or role, and a brief summary of the project details so Deepan can prepare for the discussion?"
+      },
+      {
+        "role": "user",
+        "content": "Company:Testing1"
+      },
+      {
+        "role": "assistant",
+        "content": "Thanks, Rahul! I have your details. Could you please provide a brief summary of the project scope or specific requirements so Deepan can prepare for the discussion?"
+      },
+      {
+        "role": "user",
+        "content": "hiring for full stack developer"
+      },
+      {
+        "role": "assistant",
+        "content": "Thanks, Rahul! I have all the details. I will forward your inquiry regarding the full-stack developer role to Deepan's inbox now."
+      }
+    ],
+    "email_sent": false,
+    "email_error": null
+  }
+]

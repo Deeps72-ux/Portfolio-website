@@ -4,30 +4,536 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Deepan Kulandaisami — Software Engineer portfolio">
   <title>Deepan Kulandaisami | Software Engineer</title>
-  <link rel="stylesheet" href="/static/css/style.css">
-  <script>
-    (function () {
-      const saved = localStorage.getItem("theme");
-      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-      document.documentElement.setAttribute("data-theme", saved || (prefersLight ? "light" : "dark"));
-    })();
-  </script>
+  <meta name="description"
+    content="Software Engineer specializing in Python, AI agents, RAG pipelines, FastAPI, Django and full-stack development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css?v=20260918_04">
+  <style id="contact-agent-luxury-styles">
+
+/* =========================================================================
+   LUXURY CONTACT CONCIERGE AGENT STYLES
+   ========================================================================= */
+
+.contact {
+  text-align: center;
+  border-top: 1px solid var(--line);
+  padding: 95px 20px 75px;
+}
+
+.contact-header-wrap {
+  max-width: 680px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.contact-header-wrap h2 {
+  font-size: clamp(30px, 4.5vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 16px 0 12px;
+  color: var(--text);
+}
+
+.contact-subhead {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+.contact-agent-card {
+  max-width: 740px;
+  margin: 0 auto;
+  background: var(--ask-card-bg);
+  border: 1px solid rgba(201, 255, 77, 0.25);
+  border-radius: 18px;
+  text-align: left;
+  overflow: hidden;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5), 0 0 35px -10px rgba(201, 255, 77, 0.15);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+[data-theme="light"] .contact-agent-card {
+  border: 1px solid rgba(21, 128, 61, 0.28);
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 0 25px -5px rgba(21, 128, 61, 0.08);
+}
+
+.contact-agent-card:hover {
+  border-color: rgba(201, 255, 77, 0.45);
+}
+
+[data-theme="light"] .contact-agent-card:hover {
+  border-color: rgba(21, 128, 61, 0.5);
+}
+
+.contact-agent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface2);
+  gap: 12px;
+}
+
+.contact-agent-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.c-bot-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(201, 255, 77, 0.12);
+  border: 1px solid rgba(201, 255, 77, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .c-bot-avatar {
+  background: rgba(21, 128, 61, 0.1);
+  border-color: rgba(21, 128, 61, 0.25);
+}
+
+.c-bot-titles strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.c-bot-titles span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.c-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(201, 255, 77, 0.1);
+  border: 1px solid rgba(201, 255, 77, 0.3);
+  color: var(--accent);
+  font: 11px "DM Mono", monospace;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+[data-theme="light"] .c-status-pill {
+  background: rgba(21, 128, 61, 0.08);
+  border-color: rgba(21, 128, 61, 0.25);
+}
+
+.c-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  display: inline-block;
+  animation: dotPulse 2s infinite ease-in-out;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.contact-chips-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.contact-chips-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.chips-label {
+  font: 11px "DM Mono", monospace;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
+.c-chip {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.c-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+  background: rgba(201, 255, 77, 0.05);
+}
+
+[data-theme="light"] .c-chip:hover {
+  background: rgba(21, 128, 61, 0.06);
+}
+
+.contact-messages {
+  height: 240px;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--surface);
+  scroll-behavior: smooth;
+}
+
+.c-msg {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  max-width: 85%;
+  line-height: 1.55;
+  word-break: break-word;
+  white-space: pre-wrap;
+  animation: fadeInMsg 0.25s ease-out;
+}
+
+@keyframes fadeInMsg {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.c-msg.agent {
+  background: var(--surface2);
+  color: var(--text);
+  align-self: flex-start;
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+}
+
+.c-msg.agent .msg-author {
+  font: 10px "DM Mono", monospace;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.c-msg.visitor {
+  background: var(--accent);
+  color: var(--accent-text);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.c-msg.system {
+  align-self: stretch;
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  font-size: 12px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.contact-hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 24px;
+  background: var(--surface2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font: 11px "DM Mono", monospace;
+  align-items: center;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  transition: all 0.25s ease;
+}
+
+.hud-icon {
+  font-size: 12px;
+}
+
+.hud-key {
+  color: var(--muted);
+}
+
+.hud-val {
+  color: var(--text);
+}
+
+.hud-item.captured {
+  border-color: rgba(201, 255, 77, 0.5);
+  background: rgba(201, 255, 77, 0.08);
+  color: var(--accent);
+}
+
+[data-theme="light"] .hud-item.captured {
+  border-color: rgba(21, 128, 61, 0.45);
+  background: rgba(21, 128, 61, 0.08);
+  color: var(--accent);
+}
+
+.hud-item.captured .hud-key {
+  color: var(--accent);
+}
+
+.hud-item.captured .hud-val {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.contact-console-footer {
+  padding: 16px 24px 20px;
+  background: var(--surface);
+}
+
+.c-chat-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.c-chat-form input {
+  flex: 1;
+  background: var(--chat-input-bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  border-radius: 10px;
+  outline: none;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.c-chat-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201, 255, 77, 0.15);
+}
+
+[data-theme="light"] .c-chat-form input:focus {
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+}
+
+.c-chat-form button {
+  background: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.c-chat-form button:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.contact-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-direct-dispatch {
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.btn-direct-dispatch.ready {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  animation: pulseButton 2s infinite;
+}
+
+@keyframes pulseButton {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 255, 77, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(201, 255, 77, 0); }
+}
+
+[data-theme="light"] .btn-direct-dispatch.ready {
+  animation: pulseButtonLight 2s infinite;
+}
+@keyframes pulseButtonLight {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(21, 128, 61, 0); }
+}
+
+.btn-direct-dispatch:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.dispatch-hint {
+  font: 11px "DM Mono", monospace;
+  color: var(--muted);
+}
+
+.dispatch-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 16px 24px 20px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  text-align: left;
+  animation: fadeInMsg 0.3s ease-out;
+}
+
+.banner-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.banner-text strong {
+  display: block;
+  font-size: 13px;
+  color: #22c55e;
+}
+
+.banner-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.contact-direct-wrap {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.direct-label {
+  display: block;
+  font: 11px "DM Mono", monospace;
+  color: var(--muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.contact-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.contact-link-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+  </style>
 </head>
 
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="logo" href="#home">DK</a>
+      <a class="logo" href="#home">deepan<span>.kulandaisami</span></a>
       <div class="nav-right">
         <nav>
           <a href="#about">About</a>
-          <a href="#projects">Projects</a>
+          <a href="#projects">Work</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
         </nav>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Switch theme">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Switch theme">
           <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"></circle>
@@ -52,10 +558,10 @@
   <main>
     <section id="home" class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">SOFTWARE ENGINEER · AI · BACKEND · FULL STACK</p>
+        <p class="eyebrow">DEEPAN KULANDAISAMI • SOFTWARE ENGINEER • AI & BACKEND</p>
         <h1>Building software that<br><span>solves real problems.</span></h1>
         <p class="lead">
-          Software Engineer working across Python backend systems, AI agents,
+          I'm <strong>Deepan Kulandaisami</strong>, a Software Engineer working across Python backend systems, AI agents,
           RAG pipelines and full-stack applications.
         </p>
         <div class="buttons">
@@ -66,9 +572,11 @@
 
       <div class="ask-card">
         <div class="ask-header">
-          <div class="bot-icon">✦</div>
+          <div class="bot-icon">
+            <img src="/static/img/digital-twin.png" alt="Deepan Kulandaisami - AI Digital Twin">
+          </div>
           <div>
-            <strong>Ask Deepan</strong>
+            <strong>Ask Deepan Kulandaisami</strong>
             <span>AI Digital Twin</span>
           </div>
           <span class="online">●</span>
@@ -79,7 +587,12 @@
           <button data-question="Where do you work currently, and what are your location & salary preferences?">Current role, location & package?</button>
           <button data-question="What AI & backend projects have you built?">What AI projects have you built?</button>
         </div>
-        <button class="open-chat" id="openChat">Talk with my Digital Twin <span>→</span></button>
+        <div class="ask-actions-row">
+          <button class="open-chat" id="openChat">Talk with my Digital Twin <span>→</span></button>
+          <button type="button" class="voice-quick-btn" id="quickVoiceBtn" title="Start voice conversation with digital twin">
+            <span class="mic-icon">🎙️</span> Voice
+          </button>
+        </div>
       </div>
     </section>
 
@@ -122,27 +635,27 @@
       <div class="skills-grid">
         <div class="skill-group">
           <h3>Backend</h3>
-          <p>Python · FastAPI · Django · REST APIs · PostgreSQL · WebSockets · SSE · Celery</p>
+          <p>Python • FastAPI • Django • REST APIs • PostgreSQL • WebSockets • SSE • Celery</p>
         </div>
         <div class="skill-group">
           <h3>AI / ML</h3>
-          <p>RAG · AI Agents · LangGraph · LangChain · LLM APIs · Embeddings · Vector Search · scikit-learn</p>
+          <p>RAG • AI Agents • LangGraph • LangChain • LLM APIs • Embeddings • Vector Search • scikit-learn</p>
         </div>
         <div class="skill-group">
           <h3>Frontend</h3>
-          <p>JavaScript · TypeScript · React · HTML · CSS</p>
+          <p>JavaScript • TypeScript • React • HTML • CSS</p>
         </div>
         <div class="skill-group">
           <h3>Infrastructure</h3>
-          <p>Docker · Azure · Git · Postman · Keycloak · OAuth · Microsoft Azure AD</p>
+          <p>Docker • Azure • Git • Postman • Keycloak • OAuth • Microsoft Azure AD</p>
         </div>
         <div class="skill-group">
           <h3>Systems</h3>
-          <p>C++ · DSA · OOP · Multithreading · Concurrency · TCP/IP · Wireshark</p>
+          <p>C++ • DSA • OOP • Multithreading • Concurrency • TCP/IP • Wireshark</p>
         </div>
         <div class="skill-group">
           <h3>Recently explored</h3>
-          <p>vLLM · LLM serving · Model deployment · Inference optimization</p>
+          <p>vLLM • LLM serving • Model deployment • Inference optimization</p>
         </div>
       </div>
     </section>
@@ -167,13 +680,115 @@
     </section>
 
     <section id="contact" class="section contact">
-      <div class="section-label">05 / CONTACT</div>
-      <h2>Let's build something useful.</h2>
-      <p>Open to software engineering opportunities across backend, AI and full-stack development.</p>
-      <div class="contact-links">
-        <a href="mailto:deepksami@gmail.com">Email ↗</a>
-        <a href="https://www.linkedin.com/in/deepanks/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-        <a href="https://github.com/Deeps72-ux" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <div class="section-label">05 / CONTACT & CONNECT</div>
+      <div class="contact-header-wrap">
+        <h2>Let's build something remarkable.</h2>
+        <p class="contact-subhead">
+          Open to software engineering roles across backend, AI, and full-stack systems. Chat with my AI Concierge below — it captures your note and emails it straight to my personal Gmail.
+        </p>
+      </div>
+
+      <!-- AI Contact Concierge Terminal -->
+      <div class="contact-agent-card" id="contactAgentCard">
+        <!-- Top Console Header -->
+        <div class="contact-agent-header">
+          <div class="contact-agent-meta">
+            <div class="c-bot-avatar">
+              <span class="c-bot-emoji">📬</span>
+            </div>
+            <div class="c-bot-titles">
+              <strong>Deepan's Intake Concierge</strong>
+              <span>Autonomous AI Assistant • Dispatches directly to Gmail</span>
+            </div>
+          </div>
+          <div class="c-status-pill">
+            <span class="c-status-dot"></span>
+            <span>Online & Ready</span>
+          </div>
+        </div>
+
+        <!-- Quick Topic Chips -->
+        <div class="contact-chips-bar">
+          <span class="chips-label">Quick topics:</span>
+          <button type="button" class="c-chip" data-contact-starter="Hi! I have an engineering opportunity or role for Deepan.">
+            💼 Hiring / Job Opportunity
+          </button>
+          <button type="button" class="c-chip" data-contact-starter="Hi! I'd like to discuss an AI/Backend consulting or freelance project.">
+            ⚡ AI & Backend Consulting
+          </button>
+          <button type="button" class="c-chip" data-contact-starter="Hey Deepan! Just stopping by to connect and network.">
+            ☕ Quick Intro / Networking
+          </button>
+        </div>
+
+        <!-- Chat Stream Box -->
+        <div class="contact-messages" id="contactMessages">
+          <div class="c-msg agent">
+            <div class="msg-author">Deepan's Concierge</div>
+            <div class="msg-body">Hello! I'm Deepan's personal contact assistant. Please share your name, email, and what brings you by — I'll ensure your message reaches his inbox immediately!</div>
+          </div>
+        </div>
+
+        <!-- Real-Time Extracted Telemetry HUD -->
+        <div class="contact-hud" id="contactTracker">
+          <div class="hud-item" id="trackName">
+            <span class="hud-icon">👤</span>
+            <span class="hud-key">Name:</span>
+            <span class="hud-val t-val">Waiting...</span>
+          </div>
+          <div class="hud-item" id="trackEmail">
+            <span class="hud-icon">✉️</span>
+            <span class="hud-key">Email:</span>
+            <span class="hud-val t-val">Waiting...</span>
+          </div>
+          <div class="hud-item" id="trackCompany">
+            <span class="hud-icon">🏢</span>
+            <span class="hud-key">Org / Role:</span>
+            <span class="hud-val t-val">—</span>
+          </div>
+        </div>
+
+        <!-- Input & Dispatch Controls -->
+        <div class="contact-console-footer">
+          <form class="c-chat-form" id="contactChatForm">
+            <input id="contactChatInput" autocomplete="off" placeholder="Share your name, email, or requirement..." maxlength="1000">
+            <button type="submit" id="contactChatSubmit" title="Send message">
+              <span>Send</span> ➔
+            </button>
+          </form>
+
+          <div class="contact-actions-bar">
+            <button type="button" class="btn-direct-dispatch" id="directDispatchBtn" disabled>
+              ✉️ <span>Dispatch to Deepan's Gmail</span>
+            </button>
+            <span class="dispatch-hint" id="dispatchHint">Provide your email & message to enable 1-click dispatch.</span>
+          </div>
+        </div>
+
+        <!-- Dispatch Success Banner -->
+        <div class="dispatch-banner" id="dispatchBanner" style="display: none;">
+          <div class="banner-badge">✓</div>
+          <div class="banner-text">
+            <strong>Inquiry Successfully Dispatched!</strong>
+            <p id="dispatchBannerDetail">Your note and details have been delivered directly to Deepan's personal Gmail (deepksami@gmail.com). He will review and get back to you shortly!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Classic Links Fallback -->
+      <div class="contact-direct-wrap">
+        <span class="direct-label">Or connect directly via classic channels:</span>
+        <div class="contact-links">
+          <a class="contact-link-pill" href="mailto:deepksami@gmail.com">
+            <span>Email (deepksami@gmail.com)</span> ↗
+          </a>
+          <a class="contact-link-pill" href="https://www.linkedin.com/in/deepanks/" target="_blank" rel="noreferrer">
+            <span>LinkedIn</span> ↗
+          </a>
+          <a class="contact-link-pill" href="https://github.com/Deeps72-ux" target="_blank" rel="noreferrer">
+            <span>GitHub</span> ↗
+          </a>
+        </div>
       </div>
     </section>
   </main>
@@ -183,11 +798,30 @@
   <div class="chat-overlay" id="chatOverlay">
     <div class="chat-window">
       <div class="chat-top">
-        <div><strong>Ask Deepan</strong><small>Digital Twin · Conversational AI</small></div>
-        <button id="closeChat" aria-label="Close">×</button>
+        <div class="chat-header-info">
+          <div class="bot-icon sm">
+            <img src="/static/img/digital-twin.png" alt="Deepan Kulandaisami - AI Digital Twin">
+          </div>
+          <div><strong>Ask Deepan Kulandaisami</strong><small>Digital Twin • Conversational AI</small></div>
+        </div>
+        <div class="chat-top-actions">
+          <button type="button" class="voice-toggle-btn" id="voiceToggle" title="Toggle Voice Conversation Mode">
+            <span class="mic-icon">🎙️</span>
+            <span class="voice-label">Voice Mode</span>
+          </button>
+          <button id="closeChat" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="voice-status-bar" id="voiceStatusBar" style="display: none;">
+        <div class="voice-waves">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span class="voice-status-text" id="voiceStatusText">Voice Mode ready. Speak or tap Stop.</span>
+        <select id="voiceSelect" class="voice-select-dropdown" title="Select Voice" aria-label="Select Voice"></select>
+        <button type="button" class="voice-cancel-btn" id="voiceCancelBtn">Stop</button>
       </div>
       <div class="messages" id="messages">
-        <div class="message bot">Hey there! I'm Deepan's digital twin. Ask me anything about my work at Bonbloc AI, my technical stack, projects, math background, or what I'm looking for in my next role!</div>
+        <div class="message bot">Hey there! I'm Deepan Kulandaisami's digital twin. Ask me anything about my work at Bonbloc AI, my technical stack, projects, math background, or what I'm looking for in my next role!</div>
       </div>
       <div class="chat-suggestions">
         <button data-question="What is your experience with FastAPI and AI agents?">FastAPI & AI agents?</button>
@@ -196,12 +830,13 @@
       </div>
       <form class="chat-form" id="chatForm">
         <input id="chatInput" autocomplete="off" placeholder="Ask a question..." maxlength="1000">
-        <button type="submit">↑</button>
+        <button type="button" class="mic-input-btn" id="micBtn" title="Speak your question">🎙️</button>
+        <button type="submit" title="Send question">➔</button>
       </form>
     </div>
   </div>
 
-  <script src="/static/js/app.js"></script>
+  <script src="/static/js/app.js?v=6_03"></script>
 </body>
 
 </html>

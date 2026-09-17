@@ -1,13 +1,13 @@
-
 import os
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 from app.rag import RAGEngine
+from app.contact_agent import ContactAgent
 
 load_dotenv()
 
@@ -24,7 +24,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Prevent browsers from caching static files in local dev
+@app.middleware("http")
+async def add_no_cache_headers(request: Request, call_next):
+    response = await call_next(request)
+    path = request.url.path
+    if path.startswith("/static") or path == "/":
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
+
 rag = RAGEngine()
+contact_agent = ContactAgent()
 
 @app.on_event("startup")
 async def startup_event():
@@ -32,7 +44,12 @@ async def startup_event():
 
 @app.get("/api/health")
 async def health():
-    return {"status": "ok", "service": "deepan-portfolio"}
+    return {
+        "status": "ok",
+        "service": "deepan-portfolio",
+        "rag_provider": rag.provider,
+        "contact_provider": contact_agent.provider,
+    }
 
 @app.get("/api/projects")
 async def projects():
@@ -87,8 +104,38 @@ async def chat(payload: dict):
         return {"answer": "Please keep the question under 1000 characters.", "sources": []}
     return await rag.answer(message, history=history)
 
+@app.post("/api/contact/chat")
+async def contact_chat(payload: dict):
+    message = (payload.get("message") or "").strip()
+    history = payload.get("history") or []
+    lead = payload.get("lead") or {}
+    if not message:
+        return {
+            "reply": "Hello! I'm Deepan's contact assistant. How can I help connect you with him today?",
+            "lead": lead,
+            "ready_to_send": False,
+        }
+    return await contact_agent.chat(message, history=history, current_lead=lead)
+
+@app.post("/api/contact/submit")
+async def contact_submit(payload: dict):
+    lead = payload.get("lead") or {}
+    transcript = payload.get("transcript") or []
+    if not lead.get("email") and not lead.get("message"):
+        return {"success": False, "error": "Please provide at least an email address or message."}
+    
+    result = await contact_agent.submit_inquiry(lead, transcript=transcript)
+    return {
+        "success": True,
+        "result": result,
+        "message": "Your message has been captured and dispatched to Deepan's Gmail!",
+    }
+
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
 async def root():
-    return FileResponse(STATIC_DIR / "index.html")
+    return FileResponse(
+        STATIC_DIR / "index.html",
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
