@@ -1,27 +1,39 @@
 [
   {
-    "source": "Profile",
-    "text": "Deepan Kulandaisami is a Software Engineer focused on backend systems, AI/ML and full-stack application development. His professional backend experience includes Python, Django, FastAPI, PostgreSQL, REST APIs, React, JavaScript/TypeScript, Docker, Git, WebSockets and Server-Sent Events. He has hands-on experience building AI agents, RAG pipelines, LLM integrations, document processing, embeddings, vector search and natural-language-to-SQL workflows."
+    "source": "Profile & Introduction",
+    "text": "I am Deepan Kulandaisami, a Software Engineer focused on backend systems, AI/ML, and full-stack application development. I currently work as an Associate Software Developer at Bonbloc AI. My backend engineering experience includes Python, Django, FastAPI, PostgreSQL, REST APIs, React, JavaScript/TypeScript, Docker, Git, WebSockets, and Server-Sent Events. I am proficient in data manipulation and pipeline analysis using Pandas and NumPy, and I specialize in building AI agents, RAG pipelines, LLM integrations, document processing, embeddings, vector search, and natural-language-to-SQL workflows."
   },
   {
-    "source": "Professional Experience",
-    "text": "Deepan has worked as an Associate Software Developer developing enterprise backend systems and AI solutions. His work includes requirements understanding, backend development, AI agent workflows, integrations, testing, debugging and deployment support. His professional experience spans backend APIs, databases, authentication, real-time communication and AI-powered enterprise applications."
+    "source": "Current Role & Professional Experience",
+    "text": "I work as an Associate Software Developer at Bonbloc AI. In my role, I am responsible for backend development, AI agent workflows, system integrations, Postman automated testing, debugging, and cloud deployment support. My professional experience spans high-performance backend APIs, databases, authentication mechanisms (OAuth, Keycloak, Azure AD/MSAL), real-time communication, and AI-powered enterprise applications."
+  },
+  {
+    "source": "Career Preferences, Location & Compensation",
+    "text": "I currently work at Bonbloc AI. My preferred work location is Bangalore, Karnataka (open to in-office, hybrid, or remote opportunities located in or around Bangalore). Regarding compensation and salary expectations, my package starts from 10 LPA. I am actively looking for software engineering roles in backend engineering, AI systems, and full-stack development where I can solve complex problems."
+  },
+  {
+    "source": "Passion for Mathematics",
+    "text": "I am deeply passionate about mathematics, algorithms, and computational modeling. Alongside my B.Tech in Electrical and Electronics Engineering from NITK Surathkal (2020 to 2024), I completed a minor in Mathematical & Computational Sciences. I love applying mathematical foundations—such as linear algebra, probability, vector spaces, optimization, and discrete math—to real-world AI systems, including vector search geometry, Monte Carlo simulations, embeddings, and machine learning models."
+  },
+  {
+    "source": "Python, Pandas & Data Analysis",
+    "text": "I have hands-on experience working with Python data science and ETL tools, specifically Pandas and NumPy. In projects like my Cricket Analyzer Agent, I use Pandas for data cleaning, tabular transformations, time-series aggregations, and feature engineering for machine learning and Monte Carlo simulation pipelines."
   },
   {
     "source": "Enterprise Multi-Agent Platform",
-    "text": "The Enterprise Multi-Agent Platform is an AI system comprising domain-specific agents for HR operations, supply-chain traceability, invoice management, customer engagement, architecture generation and web intelligence. Deepan designed and implemented multi-agent workflows using LangGraph and LLM orchestration patterns; developed backend services with Django, FastAPI, PostgreSQL and Supabase; built React and TypeScript integrations; worked with Keycloak and Microsoft Azure AD/MSAL; maintained Postman automated tests; used Docker; migrated vector search from FAISS to Milvus; and built document ingestion pipelines using PyMuPDF, LlamaIndex and Docling."
+    "text": "The Enterprise Multi-Agent Platform is an AI system comprising domain-specific agents for HR operations, supply-chain traceability, invoice management, customer engagement, architecture generation and web intelligence. I designed and implemented multi-agent workflows using LangGraph and LLM orchestration patterns; developed backend services with Django, FastAPI, PostgreSQL and Supabase; built React and TypeScript integrations; worked with Keycloak and Microsoft Azure AD/MSAL; maintained Postman automated tests; used Docker; migrated vector search from FAISS to Milvus; and built document ingestion pipelines using PyMuPDF, LlamaIndex and Docling."
   },
   {
     "source": "HR Operations Agent",
-    "text": "The HR Operations Agent is a multimodal RAG-based assistant integrated with enterprise HR APIs. It supports employee profile search, leave/PTO lookup, employee details retrieval and leave information processing. Deepan worked on intelligent routing between employee-related and leave-related queries."
+    "text": "The HR Operations Agent is a multimodal RAG-based assistant integrated with enterprise HR APIs. It supports employee profile search, leave/PTO lookup, employee details retrieval and leave information processing. I worked on intelligent routing between employee-related and leave-related queries."
   },
   {
     "source": "Invoice & SQL Analytics Agent",
-    "text": "The Invoice & SQL Analytics Agent is an autonomous SQL agent for invoice analytics. Deepan worked on schema discovery, metadata caching, natural-language-to-SQL generation, query validation, correction workflows and retry mechanisms. The workflow generates and executes SQL against PostgreSQL invoice databases and uses failures as feedback for correction."
+    "text": "The Invoice & SQL Analytics Agent is an autonomous SQL agent for invoice analytics. I worked on schema discovery, metadata caching, natural-language-to-SQL generation, query validation, correction workflows and retry mechanisms. The workflow generates and executes SQL against PostgreSQL invoice databases and uses failures as feedback for correction."
   },
   {
     "source": "Supply Chain Traceability Agent",
-    "text": "The Supply Chain Traceability Agent is an AI assistant for food supply-chain traceability and compliance. It supports batch tracking, shipment monitoring, supplier analysis and alert investigation. Deepan worked on SQL generation for multi-table joins and pattern-based search strategies."
+    "text": "The Supply Chain Traceability Agent is an AI assistant for food supply-chain traceability and compliance. It supports batch tracking, shipment monitoring, supplier analysis and alert investigation. I worked on SQL generation for multi-table joins and pattern-based search strategies."
   },
   {
     "source": "Specialized Enterprise Agents",
@@ -29,7 +41,7 @@
   },
   {
     "source": "Onelign AI Studio",
-    "text": "Onelign AI Studio is an enterprise AI workspace with specialized agents for document intelligence, legal workflows, architecture design, web search, SQL analytics, voice interactions and knowledge retrieval. Deepan integrated and orchestrated AI agents, developed FastAPI and Django APIs, built retrieval and workflow mechanisms, implemented WebSocket-based real-time interactions and integrated external AI and search services."
+    "text": "Onelign AI Studio is an enterprise AI workspace with specialized agents for document intelligence, legal workflows, architecture design, web search, SQL analytics, voice interactions and knowledge retrieval. I integrated and orchestrated AI agents, developed FastAPI and Django APIs, built retrieval and workflow mechanisms, implemented WebSocket-based real-time interactions and integrated external AI and search services."
   },
   {
     "source": "Onelign AI Studio - Agents",
@@ -37,34 +49,34 @@
   },
   {
     "source": "AI Proposal Automation Platform",
-    "text": "The AI Proposal Automation Platform is an enterprise system for sales proposal and RFP workflows. Deepan developed FastAPI backend workflows, RFP and proposal generator agents, Action Card-based AI assistance, AI-assisted business document generation, export functionality for PDF/DOCX/PPT/images, real-time editing, and image generation/editing capabilities using OpenAI APIs and Stable Diffusion."
+    "text": "The AI Proposal Automation Platform is an enterprise system for sales proposal and RFP workflows. I developed FastAPI backend workflows, RFP and proposal generator agents, Action Card-based AI assistance, AI-assisted business document generation, export functionality for PDF/DOCX/PPT/images, real-time editing, and image generation/editing capabilities using LLM APIs and Stable Diffusion."
   },
   {
     "source": "Face Recognition & Geo-Mapping",
-    "text": "The Face Recognition & Geo-Mapping platform combines facial embeddings, vector similarity search, authentication and geospatial mapping. Deepan investigated and resolved OAuth authentication and authorization issues, debugged integration problems across authentication providers and backend services, assisted with deployment validation and production troubleshooting, and contributed to root-cause analysis of access-control defects. Technologies included Python, FastAPI, Pinecone, OAuth, REST APIs, PostgreSQL and Docker."
+    "text": "The Face Recognition & Geo-Mapping platform combines facial embeddings, vector similarity search, authentication and geospatial mapping. I investigated and resolved OAuth authentication and authorization issues, debugged integration problems across authentication providers and backend services, assisted with deployment validation and production troubleshooting, and contributed to root-cause analysis of access-control defects. Technologies included Python, FastAPI, Pinecone, OAuth, REST APIs, PostgreSQL and Docker."
   },
   {
     "source": "Cricket Analyzer Agent",
-    "text": "The Cricket Analyzer Agent is an in-progress AI/ML decision-support platform for match strategy, player selection, simulation and post-match analysis. Deepan has contributed to FastAPI/Python backend workflows, IPL data ETL, match-state tracking, feature engineering, model integration, analytics APIs and Monte Carlo simulation. Models include toss prediction, playing XI recommendation, batting-order optimization, bowling strategy, field placement, target-score prediction and chase strategy."
+    "text": "The Cricket Analyzer Agent is an in-progress AI/ML decision-support platform for match strategy, player selection, simulation and post-match analysis. I contributed to FastAPI/Python backend workflows, IPL data ETL using Pandas, match-state tracking, feature engineering, model integration, analytics APIs and Monte Carlo simulation. Models include toss prediction, playing XI recommendation, batting-order optimization, bowling strategy, field placement, target-score prediction and chase strategy."
   },
   {
     "source": "Recent Learning",
-    "text": "Deepan recently learned vLLM and explored LLM model serving and deployment. He studied practical inference considerations including API-based model serving, GPU utilization, batching, inference latency and resource management. This expanded his understanding from consuming hosted LLM APIs toward the deployment and serving side of generative AI."
+    "text": "I recently learned vLLM and explored LLM model serving and deployment. I studied practical inference considerations including API-based model serving, GPU utilization, batching, inference latency and resource management. This expanded my understanding from consuming hosted LLM APIs toward the deployment and serving side of generative AI."
   },
   {
     "source": "Technical Approach",
-    "text": "Deepan prefers treating LLMs as one component of a larger software system rather than assuming model output is automatically correct. His AI engineering approach includes retrieval, schema/context preparation, validation, execution feedback, retries, error handling and debugging across model, backend, API and database layers."
+    "text": "I prefer treating LLMs as one component of a larger software system rather than assuming model output is automatically correct. My AI engineering approach includes retrieval, schema/context preparation, validation, execution feedback, retries, error handling and debugging across model, backend, API and database layers."
   },
   {
     "source": "C++ and Systems",
-    "text": "Deepan has working knowledge of C++, data structures and algorithms, object-oriented programming, STL, memory management, RAII, smart pointers, multithreading and concurrency. He also has working knowledge of TCP/IP networking and packet analysis with Wireshark."
+    "text": "I have working knowledge of C++, data structures and algorithms, object-oriented programming, STL, memory management, RAII, smart pointers, multithreading and concurrency. I also have working knowledge of TCP/IP networking and packet analysis with Wireshark."
   },
   {
     "source": "Education",
-    "text": "Deepan completed a B.Tech in Electrical and Electronics Engineering from NITK Surathkal from 2020 to 2024, along with a minor in Mathematical & Computational Sciences."
+    "text": "I completed my B.Tech in Electrical and Electronics Engineering from NITK Surathkal (2020 - 2024), along with a minor in Mathematical & Computational Sciences."
   },
   {
     "source": "Certifications",
-    "text": "Deepan holds Microsoft Azure certifications AZ-900 and AZ-204."
+    "text": "I hold Microsoft Azure certifications AZ-900 and AZ-204."
   }
 ]
