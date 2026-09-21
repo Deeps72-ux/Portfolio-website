@@ -41,6 +41,7 @@ if (themeToggle) {
 function showChat(question = "") {
   unlockMobileAudio();
   overlay.classList.add("open");
+  restoreChatGeometry();
   if (question) {
     input.value = question;
     setTimeout(() => form.requestSubmit(), 80);
@@ -56,11 +57,268 @@ closeChat.addEventListener("click", () => {
 });
 
 overlay.addEventListener("click", (e) => {
+  if (hasChatInteracted) return;
   if (e.target === overlay) {
     stopVoiceAndSpeech();
     overlay.classList.remove("open");
   }
 });
+
+/* =========================================================================
+   DRAGGABLE & RESIZABLE CHATBOT MODAL ENGINE
+   ========================================================================= */
+const chatWindow = document.getElementById("chatWindow");
+const chatTop = document.getElementById("chatTop");
+const chatResetBtn = document.getElementById("chatResetBtn");
+const chatResizers = document.querySelectorAll(".chat-resizer");
+
+let isDraggingChat = false;
+let isResizingChat = false;
+let resizeDirection = "";
+let dragStartX = 0;
+let dragStartY = 0;
+let initialRect = null;
+let hasChatInteracted = false;
+
+const MIN_CHAT_WIDTH = 320;
+const MIN_CHAT_HEIGHT = 380;
+
+function ensureChatAbsoluteCoords() {
+  if (!chatWindow) return { left: 0, top: 0, width: 470, height: 700 };
+  const rect = chatWindow.getBoundingClientRect();
+  chatWindow.style.position = "fixed";
+  chatWindow.style.width = `${Math.round(rect.width)}px`;
+  chatWindow.style.height = `${Math.round(rect.height)}px`;
+  chatWindow.style.left = `${Math.round(rect.left)}px`;
+  chatWindow.style.top = `${Math.round(rect.top)}px`;
+  chatWindow.style.right = "auto";
+  chatWindow.style.bottom = "auto";
+  return rect;
+}
+
+function restoreChatGeometry() {
+  if (!chatWindow || window.innerWidth <= 520) return;
+  try {
+    const raw = localStorage.getItem("chatModalGeometry");
+    if (!raw) return;
+    const geo = JSON.parse(raw);
+    const maxW = window.innerWidth - 16;
+    const maxH = window.innerHeight - 16;
+    const w = Math.min(Math.max(geo.width || 470, MIN_CHAT_WIDTH), maxW);
+    const h = Math.min(Math.max(geo.height || 700, MIN_CHAT_HEIGHT), maxH);
+    const left = Math.min(Math.max(geo.left || 0, 8), window.innerWidth - w - 8);
+    const top = Math.min(Math.max(geo.top || 0, 8), window.innerHeight - h - 8);
+
+    chatWindow.style.position = "fixed";
+    chatWindow.style.width = `${w}px`;
+    chatWindow.style.height = `${h}px`;
+    chatWindow.style.left = `${left}px`;
+    chatWindow.style.top = `${top}px`;
+    chatWindow.style.right = "auto";
+    chatWindow.style.bottom = "auto";
+  } catch (_) {}
+}
+
+function saveChatGeometry() {
+  if (!chatWindow || window.innerWidth <= 520) return;
+  try {
+    const rect = chatWindow.getBoundingClientRect();
+    localStorage.setItem("chatModalGeometry", JSON.stringify({
+      left: Math.round(rect.left),
+      top: Math.round(rect.top),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height)
+    }));
+  } catch (_) {}
+}
+
+function resetChatGeometry() {
+  if (!chatWindow) return;
+  chatWindow.style.position = "fixed";
+  chatWindow.style.width = "";
+  chatWindow.style.height = "";
+  chatWindow.style.left = "";
+  chatWindow.style.top = "";
+  chatWindow.style.right = "";
+  chatWindow.style.bottom = "";
+  try {
+    localStorage.removeItem("chatModalGeometry");
+  } catch (_) {}
+}
+
+if (chatResetBtn) {
+  chatResetBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    resetChatGeometry();
+  });
+}
+
+if (chatTop) {
+  chatTop.addEventListener("dblclick", (e) => {
+    if (e.target.closest("button, select, input, a")) return;
+    resetChatGeometry();
+  });
+
+  const onDragStart = (e) => {
+    if (window.innerWidth <= 520) return;
+    if (e.target.closest("button, select, input, a, .chat-resizer")) return;
+
+    isDraggingChat = true;
+    hasChatInteracted = false;
+    chatWindow.classList.add("is-dragging");
+
+    const pt = e.touches ? e.touches[0] : e;
+    dragStartX = pt.clientX;
+    dragStartY = pt.clientY;
+    initialRect = ensureChatAbsoluteCoords();
+
+    document.addEventListener("mousemove", onDragMove, { passive: false });
+    document.addEventListener("mouseup", onDragEnd);
+    document.addEventListener("touchmove", onDragMove, { passive: false });
+    document.addEventListener("touchend", onDragEnd);
+  };
+
+  const onDragMove = (e) => {
+    if (!isDraggingChat || !initialRect) return;
+    const pt = e.touches ? e.touches[0] : e;
+    const dx = pt.clientX - dragStartX;
+    const dy = pt.clientY - dragStartY;
+
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
+      hasChatInteracted = true;
+    }
+    e.preventDefault();
+
+    const maxLeft = window.innerWidth - initialRect.width - 8;
+    const maxTop = window.innerHeight - initialRect.height - 8;
+    const newLeft = Math.max(8, Math.min(initialRect.left + dx, Math.max(8, maxLeft)));
+    const newTop = Math.max(8, Math.min(initialRect.top + dy, Math.max(8, maxTop)));
+
+    chatWindow.style.left = `${Math.round(newLeft)}px`;
+    chatWindow.style.top = `${Math.round(newTop)}px`;
+  };
+
+  const onDragEnd = () => {
+    if (!isDraggingChat) return;
+    isDraggingChat = false;
+    chatWindow.classList.remove("is-dragging");
+    document.removeEventListener("mousemove", onDragMove);
+    document.removeEventListener("mouseup", onDragEnd);
+    document.removeEventListener("touchmove", onDragMove);
+    document.removeEventListener("touchend", onDragEnd);
+    if (hasChatInteracted) {
+      saveChatGeometry();
+      setTimeout(() => { hasChatInteracted = false; }, 120);
+    }
+  };
+
+  chatTop.addEventListener("mousedown", onDragStart);
+  chatTop.addEventListener("touchstart", onDragStart, { passive: false });
+}
+
+// Attach Resizer handles
+chatResizers.forEach(resizer => {
+  const dir = resizer.dataset.direction;
+
+  const onResizeStart = (e) => {
+    if (window.innerWidth <= 520) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    isResizingChat = true;
+    resizeDirection = dir;
+    hasChatInteracted = false;
+    chatWindow.classList.add("is-resizing");
+
+    const pt = e.touches ? e.touches[0] : e;
+    dragStartX = pt.clientX;
+    dragStartY = pt.clientY;
+    initialRect = ensureChatAbsoluteCoords();
+
+    document.addEventListener("mousemove", onResizeMove, { passive: false });
+    document.addEventListener("mouseup", onResizeEnd);
+    document.addEventListener("touchmove", onResizeMove, { passive: false });
+    document.addEventListener("touchend", onResizeEnd);
+  };
+
+  const onResizeMove = (e) => {
+    if (!isResizingChat || !initialRect) return;
+    const pt = e.touches ? e.touches[0] : e;
+    const dx = pt.clientX - dragStartX;
+    const dy = pt.clientY - dragStartY;
+
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
+      hasChatInteracted = true;
+    }
+    e.preventDefault();
+
+    const maxW = window.innerWidth - 16;
+    const maxH = window.innerHeight - 16;
+
+    let w = initialRect.width;
+    let h = initialRect.height;
+    let left = initialRect.left;
+    let top = initialRect.top;
+
+    if (resizeDirection.includes("e")) {
+      w = Math.min(maxW, Math.max(MIN_CHAT_WIDTH, initialRect.width + dx));
+    } else if (resizeDirection.includes("w")) {
+      const targetW = Math.min(maxW, Math.max(MIN_CHAT_WIDTH, initialRect.width - dx));
+      left = initialRect.left + (initialRect.width - targetW);
+      w = targetW;
+    }
+
+    if (resizeDirection.includes("s")) {
+      h = Math.min(maxH, Math.max(MIN_CHAT_HEIGHT, initialRect.height + dy));
+    } else if (resizeDirection.includes("n")) {
+      const targetH = Math.min(maxH, Math.max(MIN_CHAT_HEIGHT, initialRect.height - dy));
+      top = initialRect.top + (initialRect.height - targetH);
+      h = targetH;
+    }
+
+    if (left < 8) {
+      w -= (8 - left);
+      left = 8;
+    }
+    if (top < 8) {
+      h -= (8 - top);
+      top = 8;
+    }
+
+    chatWindow.style.width = `${Math.round(w)}px`;
+    chatWindow.style.height = `${Math.round(h)}px`;
+    chatWindow.style.left = `${Math.round(left)}px`;
+    chatWindow.style.top = `${Math.round(top)}px`;
+  };
+
+  const onResizeEnd = () => {
+    if (!isResizingChat) return;
+    isResizingChat = false;
+    resizeDirection = "";
+    chatWindow.classList.remove("is-resizing");
+    document.removeEventListener("mousemove", onResizeMove);
+    document.removeEventListener("mouseup", onResizeEnd);
+    document.removeEventListener("touchmove", onResizeMove);
+    document.removeEventListener("touchend", onResizeEnd);
+    if (hasChatInteracted) {
+      saveChatGeometry();
+      setTimeout(() => { hasChatInteracted = false; }, 120);
+    }
+  };
+
+  resizer.addEventListener("mousedown", onResizeStart);
+  resizer.addEventListener("touchstart", onResizeStart, { passive: false });
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth <= 520) {
+    resetChatGeometry();
+  } else {
+    restoreChatGeometry();
+  }
+});
+
+restoreChatGeometry();
 
 document.querySelectorAll("[data-question]").forEach(btn => {
   btn.addEventListener("click", () => {

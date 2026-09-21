@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css?v=20260921_01">
+  <link rel="stylesheet" href="/static/css/style.css?v=20260921_02">
   <style id="contact-agent-luxury-styles">
 
 /* =========================================================================
@@ -534,7 +534,7 @@
           <a href="#contact">Contact</a>
           <a href="/resume" target="_blank" download="Deepan_Kulandaisami_Resume.pdf" class="nav-resume-btn" title="Download Deepan's Resume (PDF)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Resume ⤓
+            Resume
           </a>
         </nav>
         <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Switch theme">
@@ -596,12 +596,7 @@
           <button data-question="What AI agentic flows and FastAPI projects have you built?">AI & FastAPI projects?</button>
           <button data-question="Where do you work currently, and what are your location & salary preferences?">Current role & package?</button>
         </div>
-        <div class="ask-actions-row">
-          <button class="open-chat" id="openChat">Talk with my Digital Twin <span>→</span></button>
-          <button type="button" class="voice-quick-btn" id="quickVoiceBtn" title="Start voice conversation with digital twin">
-            <span class="mic-icon">🎙️</span> Voice
-          </button>
-        </div>
+        <button class="open-chat" id="openChat">Talk with my Digital Twin <span>→</span></button>
       </div>
     </section>
 
@@ -813,15 +808,19 @@
   <footer>© 2026 Deepan Kulandaisami</footer>
 
   <div class="chat-overlay" id="chatOverlay">
-    <div class="chat-window">
-      <div class="chat-top">
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-top" id="chatTop" title="Drag to move • Double-click to reset position">
         <div class="chat-header-info">
+          <div class="chat-drag-grip" aria-hidden="true" title="Drag to move">
+            <span></span><span></span><span></span>
+          </div>
           <div class="bot-icon sm">
             <img src="/static/img/digital-twin.png" alt="Deepan Kulandaisami - AI Digital Twin">
           </div>
           <div><strong>Ask Deepan Kulandaisami</strong><small>Digital Twin • Conversational AI</small></div>
         </div>
         <div class="chat-top-actions">
+          <button type="button" class="chat-reset-btn" id="chatResetBtn" title="Reset window size and position" aria-label="Reset window">⟲</button>
           <button type="button" class="voice-toggle-btn" id="voiceToggle" title="Toggle Voice Conversation Mode">
             <span class="mic-icon">🎙️</span>
             <span class="voice-label">Voice Mode</span>
@@ -851,6 +850,20 @@
         <button type="button" class="mic-input-btn" id="micBtn" title="Speak your question">🎙️</button>
         <button type="submit" title="Send question">➔</button>
       </form>
+      <!-- Resizer handles for 8-direction resizing -->
+      <div class="chat-resizer resizer-nw" data-direction="nw"></div>
+      <div class="chat-resizer resizer-t" data-direction="n"></div>
+      <div class="chat-resizer resizer-ne" data-direction="ne"></div>
+      <div class="chat-resizer resizer-r" data-direction="e"></div>
+      <div class="chat-resizer resizer-se" data-direction="se" title="Drag to resize">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <line x1="9" y1="2" x2="2" y2="9"></line>
+          <line x1="9" y1="6" x2="6" y2="9"></line>
+        </svg>
+      </div>
+      <div class="chat-resizer resizer-b" data-direction="s"></div>
+      <div class="chat-resizer resizer-sw" data-direction="sw"></div>
+      <div class="chat-resizer resizer-l" data-direction="w"></div>
     </div>
   </div>
 
@@ -896,7 +909,7 @@
     </div>
   </div>
 
-  <script src="/static/js/app.js?v=20260921_01"></script>
+  <script src="/static/js/app.js?v=20260921_02"></script>
 </body>
 
 </html>
