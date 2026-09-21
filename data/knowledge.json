@@ -21,23 +21,23 @@
   },
   {
     "source": "Project: NexusGraph",
-    "text": "NexusGraph is an Autonomous Multi-Agent Orchestrator built using FastAPI, LangGraph, Python, Qdrant vector database, PostgreSQL, WebSockets, and Docker. It coordinates specialized sub-agents (Planner, Code Synthesizer, Query Validator, and Execution Engine) with stateful cycles, human-in-the-loop approvals, and self-healing error recovery. The project is live and deployed on Render at https://nexusgraph-multiagent-orchestrator.onrender.com with open-source code on GitHub at https://github.com/Deeps72-ux/nexusgraph-multiagent-orchestrator."
+    "text": "NexusGraph is an Autonomous Multi-Agent Orchestrator built using FastAPI, LangGraph, Python, Qdrant vector database, PostgreSQL, WebSockets, and Docker. It coordinates specialized sub-agents (Planner, Code Synthesizer, Query Validator, and Execution Engine) with stateful cycles, human-in-the-loop approvals, and self-healing error recovery. The project is live and deployed on Render at https://nexusgraph-multiagent-orchestrator.onrender.com with open-source code on GitHub at https://github.com/Deeps72-ux/nexusgraph-multiagent-orchestrator. (Deployed on Render free tier; instances sleep when idle and take ~30–50s to wake up on the first request)."
   },
   {
     "source": "Project: DocuMind",
-    "text": "DocuMind is an Agentic Multimodal RAG & Document Intelligence System built with FastAPI, LangChain, Milvus, PyMuPDF, Tesseract OCR, Groq LLMs, and Redis. It handles complex scanned PDFs, tabular reports, and technical documentation using layout-aware chunking, hybrid vector/keyword retrieval, cross-encoder reranking, and hallucination evaluation guardrails."
+    "text": "DocuMind is an Agentic Multimodal RAG & Document Intelligence System built with FastAPI, LangChain, Milvus, PyMuPDF, Tesseract OCR, Groq LLMs, and Redis. It handles complex scanned PDFs, tabular reports, and technical documentation using layout-aware chunking, hybrid vector/keyword retrieval, cross-encoder reranking, and hallucination evaluation guardrails. The project is live and deployed on Render at https://documind-agentic-rag-xuz4.onrender.com/ with open-source code on GitHub at https://github.com/Deeps72-ux/documind-agentic-rag. (Deployed on Render free tier; instances sleep when idle and take ~30–50s to wake up on the first request)."
   },
   {
     "source": "Project: QueryGenie",
-    "text": "QueryGenie is a Self-Healing Natural Language to SQL Studio developed with FastAPI, PostgreSQL, LangGraph, SQLGlot, and Docker. It dynamically discovers database schemas, validates query abstract syntax trees (AST), runs trial executions in a sandbox, and implements an error-feedback loop that feeds database exceptions back into the agent for automated SQL correction and retry."
+    "text": "QueryGenie is a Self-Healing Natural Language to SQL Studio developed with FastAPI, PostgreSQL, LangGraph, SQLGlot, and Docker. It dynamically discovers database schemas, validates query abstract syntax trees (AST), runs trial executions in a sandbox, and implements an error-feedback loop that feeds database exceptions back into the agent for automated SQL correction and retry. The project is live and deployed on Render at https://querygenie-nl-sql-studio.onrender.com/ with open-source code on GitHub at https://github.com/Deeps72-ux/querygenie-nl-sql-studio. (Deployed on Render free tier; instances sleep when idle and take ~30–50s to wake up on the first request)."
   },
   {
     "source": "Project: OmniVoice",
-    "text": "OmniVoice is a Real-Time Streaming Conversational Agent built with FastAPI, WebSockets, OpenAI Whisper, Sarvam AI voice APIs, FFmpeg, and AsyncIO. It provides duplex voice-to-voice interaction with sub-second latency, streaming audio transcription, asynchronous tool calling, and expressive speech synthesis. The project is live and deployed on Render at https://omnivoice-streaming-agent.onrender.com/ with open-source code on GitHub at https://github.com/Deeps72-ux/omnivoice-streaming-agent."
+    "text": "OmniVoice is a Real-Time Streaming Conversational Agent built with FastAPI, WebSockets, OpenAI Whisper, Sarvam AI voice APIs, FFmpeg, and AsyncIO. It provides duplex voice-to-voice interaction with sub-second latency, streaming audio transcription, asynchronous tool calling, and expressive speech synthesis. The project is live and deployed on Render at https://omnivoice-streaming-agent.onrender.com/ with open-source code on GitHub at https://github.com/Deeps72-ux/omnivoice-streaming-agent. (Deployed on Render free tier; instances sleep when idle and take ~30–50s to wake up on the first request)."
   },
   {
     "source": "Live Deployed Projects",
-    "text": "Deepan has deployed live production applications on Render: 1) NexusGraph (Autonomous Multi-Agent Orchestration Engine) is live at https://nexusgraph-multiagent-orchestrator.onrender.com. 2) OmniVoice (Real-Time Streaming Voice AI Agent) is live at https://omnivoice-streaming-agent.onrender.com/. Visitors can explore, test, and interact directly with both live web services."
+    "text": "Deepan has 5 live production applications deployed on Render: 1) NexusGraph (Autonomous Multi-Agent Orchestrator) at https://nexusgraph-multiagent-orchestrator.onrender.com. 2) OmniVoice (Real-Time Streaming Voice AI Agent) at https://omnivoice-streaming-agent.onrender.com/. 3) DocuMind (Agentic Multimodal RAG) at https://documind-agentic-rag-xuz4.onrender.com/. 4) QueryGenie (Self-Healing Text-to-SQL Studio) at https://querygenie-nl-sql-studio.onrender.com/. 5) ProposalCraft (Autonomous RFP & Proposal Generator) at https://proposalcraft-agent.onrender.com/. Visitors can explore, test, and interact directly with all live web services. All these applications are deployed on Render's free tier, so they sleep after periods of inactivity and wake up upon receiving a request (~30–50 seconds cold start)."
   },
   {
     "source": "Project: CricPredict",
@@ -45,7 +45,7 @@
   },
   {
     "source": "Project: ProposalCraft",
-    "text": "ProposalCraft is an Autonomous Business RFP & Document Generator built with FastAPI, Python, LangGraph, ReportLab, python-docx, and Pydantic. It ingests client requirements and RFP documents, structures executive proposals using agentic planning, and exports production-ready PDF, PPTX, and DOCX files."
+    "text": "ProposalCraft is an Autonomous Business RFP & Document Generator built with FastAPI, Python, LangGraph, ReportLab, python-docx, and Pydantic. It ingests client requirements and RFP documents, structures executive proposals using agentic planning, and exports production-ready PDF, PPTX, and DOCX files. The project is live and deployed on Render at https://proposalcraft-agent.onrender.com/ with open-source code on GitHub at https://github.com/Deeps72-ux/proposalcraft-agent. (Deployed on Render free tier; instances sleep when idle and take ~30–50s to wake up on the first request)."
   },
   {
     "source": "Python, Pandas & Data Analysis",

@@ -92,10 +92,10 @@ async def projects():
                 "badge": "RAG System",
                 "description": "Production-grade document intelligence engine with OCR, layout-aware PDF chunking, hybrid dense/sparse vector retrieval, cross-encoder reranking, and hallucination guardrails.",
                 "technologies": ["FastAPI", "LangChain", "Milvus", "PyMuPDF", "Tesseract", "Groq LLM", "Redis"],
-                "demo_url": "https://documind.demo.app",
+                "demo_url": "https://documind-agentic-rag-xuz4.onrender.com/",
                 "github_url": "https://github.com/Deeps72-ux/documind-agentic-rag",
                 "featured": True,
-                "is_live": False,
+                "is_live": True,
             },
             {
                 "id": "querygenie",
@@ -105,10 +105,10 @@ async def projects():
                 "badge": "FastAPI Backend",
                 "description": "Autonomous text-to-SQL backend service with dynamic schema discovery, AST query validation, sandbox trial execution, and error-feedback loop for query correction.",
                 "technologies": ["FastAPI", "PostgreSQL", "LangGraph", "SQLGlot", "Pydantic", "Docker"],
-                "demo_url": "https://querygenie.demo.app",
+                "demo_url": "https://querygenie-nl-sql-studio.onrender.com/",
                 "github_url": "https://github.com/Deeps72-ux/querygenie-nl-sql-studio",
                 "featured": True,
-                "is_live": False,
+                "is_live": True,
             },
             {
                 "id": "omnivoice",
@@ -144,10 +144,10 @@ async def projects():
                 "badge": "AI Workflow",
                 "description": "Agentic pipeline that converts raw client requests and RFP documents into structured business proposals with multi-format export workflows (PDF, PPTX, DOCX).",
                 "technologies": ["FastAPI", "Python", "LangGraph", "ReportLab", "python-docx", "Pydantic"],
-                "demo_url": "https://proposalcraft.demo.app",
+                "demo_url": "https://proposalcraft-agent.onrender.com/",
                 "github_url": "https://github.com/Deeps72-ux/proposalcraft-agent",
                 "featured": False,
-                "is_live": False,
+                "is_live": True,
             },
         ]
     }

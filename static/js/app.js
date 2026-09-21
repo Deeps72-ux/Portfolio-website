@@ -750,7 +750,7 @@ function renderProjects() {
       <div class="project-top">
         <div class="project-header-meta">
           <span class="project-type">${p.type}</span>
-          <span class="project-badge ${p.is_live ? 'badge-live' : ''}">${p.is_live ? 'Live on Render' : (p.badge || "System")}</span>
+          <span class="project-badge ${p.is_live ? 'badge-live' : ''}" ${p.is_live ? 'title="Render Free Tier: Instance enters sleep when idle and wakes up on request (~30–50s cold start)"' : ''}>${p.is_live ? 'Live on Render' : (p.badge || "System")}</span>
         </div>
         <h3 class="project-title">${p.title}</h3>
         <p class="project-desc">${p.description}</p>
@@ -759,7 +759,7 @@ function renderProjects() {
         <div class="tags">${(p.technologies || []).map(t => `<span>${t}</span>`).join("")}</div>
         <div class="project-actions">
           ${p.is_live ? `
-            <a href="${p.demo_url}" class="project-btn demo-btn live-link-btn" target="_blank" rel="noopener noreferrer" title="Launch Live App on Render">
+            <a href="${p.demo_url}" class="project-btn demo-btn live-link-btn" target="_blank" rel="noopener noreferrer" data-project-title="${p.title}" title="Launch Live App on Render (Free tier: wakes up in ~30–50s if idle)">
               <span class="pulse-dot"></span>
               <span>Live App ↗</span>
             </a>
@@ -784,6 +784,55 @@ function renderProjects() {
   attachDemoButtons();
 }
 
+/* =========================================================================
+   RENDER FREE TIER PRE-WARMING & WAKE-UP LOGIC
+   ========================================================================= */
+const prewarmedUrls = new Set();
+function prewarmService(url) {
+  if (!url || !url.includes("onrender.com") || prewarmedUrls.has(url)) return;
+  prewarmedUrls.add(url);
+  try {
+    fetch(url, { mode: "no-cors", cache: "no-store" }).catch(() => {});
+  } catch (_) {}
+}
+
+function prewarmAllRenderServices() {
+  if (!allProjects || !allProjects.length) return;
+  const liveProjects = allProjects.filter(p => p.is_live && p.demo_url && p.demo_url.includes("onrender.com"));
+  liveProjects.forEach((p, idx) => {
+    setTimeout(() => {
+      prewarmService(p.demo_url);
+    }, 1500 + idx * 800);
+  });
+}
+
+function showRenderWakeToast(title) {
+  let toast = document.getElementById("renderWakeToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "renderWakeToast";
+    toast.className = "render-wake-toast";
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = `
+    <div class="toast-indicator-pulse"></div>
+    <div class="toast-content">
+      <div class="toast-title">Connecting to <strong>${title}</strong>...</div>
+      <div class="toast-desc">Render free-tier service is waking up (~30–50s if asleep). Please keep the new tab open!</div>
+    </div>
+    <button type="button" class="toast-close" aria-label="Dismiss">✕</button>
+  `;
+  const closeBtn = toast.querySelector(".toast-close");
+  if (closeBtn) {
+    closeBtn.onclick = () => toast.classList.remove("show");
+  }
+  toast.classList.add("show");
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 10000);
+}
+
 function attachDemoButtons() {
   document.querySelectorAll(".demo-btn, .sandbox-trigger-btn").forEach(btn => {
     if (btn.tagName === "BUTTON") {
@@ -792,6 +841,27 @@ function attachDemoButtons() {
         openDemoModalForProject(projectId);
       });
     }
+  });
+
+  // Handle live link clicks to show friendly cold-start toast
+  document.querySelectorAll(".live-link-btn").forEach(link => {
+    link.addEventListener("click", () => {
+      const title = link.dataset.projectTitle || "Render App";
+      showRenderWakeToast(title);
+    });
+  });
+
+  // Pre-warm on mouseenter or touch
+  document.querySelectorAll(".project").forEach(card => {
+    const onWarm = () => {
+      const id = card.dataset.id;
+      const proj = allProjects.find(p => p.id === id);
+      if (proj && proj.is_live) {
+        prewarmService(proj.demo_url);
+      }
+    };
+    card.addEventListener("mouseenter", onWarm, { passive: true });
+    card.addEventListener("touchstart", onWarm, { passive: true });
   });
 }
 
@@ -821,14 +891,16 @@ function openDemoModalForProject(projectId) {
     if (project.is_live) {
       demoModalExternalLink.innerHTML = '<span class="pulse-dot"></span> <span>Launch Live Render App ↗</span>';
       demoModalExternalLink.classList.add("btn-live-accent");
+      demoModalExternalLink.setAttribute("data-project-title", project.title);
     } else {
       demoModalExternalLink.innerHTML = '<span>Launch Standalone App ↗</span>';
       demoModalExternalLink.classList.remove("btn-live-accent");
+      demoModalExternalLink.removeAttribute("data-project-title");
     }
   }
   if (demoStatusIndicator) {
     if (project.is_live) {
-      demoStatusIndicator.textContent = "● Live Production Deployment on Render";
+      demoStatusIndicator.innerHTML = `● Live Production on Render <span class="render-sleep-badge" title="Free tier instance sleeps when idle and wakes on request (~30–50s cold start)">Free Tier: Wakes on Request (~30s)</span>`;
       demoStatusIndicator.classList.add("status-live");
     } else {
       demoStatusIndicator.textContent = "● Interactive Simulation Sandbox Active";
@@ -846,6 +918,11 @@ function openDemoModalForProject(projectId) {
 
   if (demoModalOverlay) {
     demoModalOverlay.classList.add("open");
+  }
+
+  // Pre-warm if live
+  if (project.is_live && project.demo_url) {
+    prewarmService(project.demo_url);
   }
 }
 
@@ -920,12 +997,21 @@ if (projectFiltersContainer) {
   });
 }
 
+if (demoModalExternalLink) {
+  demoModalExternalLink.addEventListener("click", () => {
+    if (currentDemoProject && currentDemoProject.is_live) {
+      showRenderWakeToast(currentDemoProject.title);
+    }
+  });
+}
+
 async function loadProjects() {
   try {
     const response = await fetch("/api/projects");
     const data = await response.json();
     allProjects = data.projects || [];
     renderProjects();
+    prewarmAllRenderServices();
   } catch (err) {
     if (projectGrid) {
       projectGrid.innerHTML = "<p>Projects could not be loaded.</p>";
