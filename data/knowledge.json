@@ -1,82 +1,66 @@
 [
   {
     "source": "Profile & Introduction",
-    "text": "I am Deepan Kulandaisami, a Software Engineer focused on backend systems, AI/ML, and full-stack application development. I currently work as an Associate Software Developer at Bonbloc AI. My backend engineering experience includes Python, Django, FastAPI, PostgreSQL, REST APIs, React, JavaScript/TypeScript, Docker, Git, WebSockets, and Server-Sent Events. I am proficient in data manipulation and pipeline analysis using Pandas and NumPy, and I specialize in building AI agents, RAG pipelines, LLM integrations, document processing, embeddings, vector search, and natural-language-to-SQL workflows."
+    "text": "I am Deepan Kulandaisami, a Software Engineer focused on backend systems, AI/ML, and full-stack application development. I have 1.5+ years of production experience building LLM applications, RAG systems, AI agents, and Python backend systems with FastAPI, Django, LangGraph, LangChain, CrewAI, PostgreSQL, vector databases, and cloud deployments. I hold a B.Tech in Electrical and Electronics Engineering with a Minor in Mathematical & Computational Sciences from NITK Surathkal (2020-2024)."
+  },
+  {
+    "source": "Resume Download",
+    "text": "Viewers and recruiters can download my official resume at any time by clicking the 'Download Resume' button in the navigation bar or hero section, or directly accessing the URL /resume (which serves my latest verified PDF resume: Deepan_Kulandaisami_Resume.pdf)."
   },
   {
     "source": "Current Role & Professional Experience",
-    "text": "I work as an Associate Software Developer at Bonbloc AI. In my role, I am responsible for backend development, AI agent workflows, system integrations, Postman automated testing, debugging, and cloud deployment support. My professional experience spans high-performance backend APIs, databases, authentication mechanisms (OAuth, Keycloak, Azure AD/MSAL), real-time communication, and AI-powered enterprise applications."
+    "text": "I work as an Associate Software Developer (AI Full Stack) at Bonbloc AI (Apr 2025 – Present). In my role, I develop production AI software, high-performance Python backend services (FastAPI, Django), real-time streaming architectures (WebSockets, SSE, Celery), authentication systems (Keycloak, Azure AD/MSAL), PostgreSQL database workflows, and containerized deployments using Docker and Azure Container Apps. Due to Non-Disclosure Agreements (NDA), my proprietary company projects are kept confidential, and I demonstrate my architectural capabilities through my personal open-source projects."
   },
   {
     "source": "Career Preferences, Location & Compensation",
-    "text": "I currently work at Bonbloc AI. My preferred work location is Bangalore, Karnataka (open to in-office, hybrid, or remote opportunities located in or around Bangalore). Regarding compensation and salary expectations, my package starts from 10 LPA. I am actively looking for software engineering roles in backend engineering, AI systems, and full-stack development where I can solve complex problems."
+    "text": "I am based in Bangalore, Karnataka (open to in-office, hybrid, or remote opportunities in or around Bangalore). Regarding compensation and salary expectations, my package starts from 10 LPA. I am actively looking for software engineering roles in backend engineering, AI systems, and full-stack development where I can solve complex problems."
   },
   {
     "source": "Passion for Mathematics",
     "text": "I am deeply passionate about mathematics, algorithms, and computational modeling. Alongside my B.Tech in Electrical and Electronics Engineering from NITK Surathkal (2020 to 2024), I completed a minor in Mathematical & Computational Sciences. I love applying mathematical foundations—such as linear algebra, probability, vector spaces, optimization, and discrete math—to real-world AI systems, including vector search geometry, Monte Carlo simulations, embeddings, and machine learning models."
   },
   {
+    "source": "Project: NexusGraph",
+    "text": "NexusGraph is an Autonomous Multi-Agent Orchestrator built using FastAPI, LangGraph, Python, Qdrant vector database, PostgreSQL, WebSockets, and Docker. It coordinates specialized sub-agents (Planner, Code Synthesizer, Query Validator, and Execution Engine) with stateful cycles, human-in-the-loop approvals, and self-healing error recovery. Users can view the live demo and inspect the open-source code on GitHub."
+  },
+  {
+    "source": "Project: DocuMind",
+    "text": "DocuMind is an Agentic Multimodal RAG & Document Intelligence System built with FastAPI, LangChain, Milvus, PyMuPDF, Tesseract OCR, Groq LLMs, and Redis. It handles complex scanned PDFs, tabular reports, and technical documentation using layout-aware chunking, hybrid vector/keyword retrieval, cross-encoder reranking, and hallucination evaluation guardrails."
+  },
+  {
+    "source": "Project: QueryGenie",
+    "text": "QueryGenie is a Self-Healing Natural Language to SQL Studio developed with FastAPI, PostgreSQL, LangGraph, SQLGlot, and Docker. It dynamically discovers database schemas, validates query abstract syntax trees (AST), runs trial executions in a sandbox, and implements an error-feedback loop that feeds database exceptions back into the agent for automated SQL correction and retry."
+  },
+  {
+    "source": "Project: OmniVoice",
+    "text": "OmniVoice is a Real-Time Streaming Conversational Agent built with FastAPI, WebSockets, OpenAI Whisper, Sarvam AI voice APIs, FFmpeg, and AsyncIO. It provides duplex voice-to-voice interaction with sub-second latency, streaming audio transcription, asynchronous tool calling, and expressive speech synthesis."
+  },
+  {
+    "source": "Project: CricPredict",
+    "text": "CricPredict is an ML Match Analytics & Monte Carlo Simulation Engine built using Python, FastAPI, Scikit-Learn, Pandas, NumPy, XGBoost, and Streamlit. It derives deep performance insights from ball-by-ball cricket data, featuring real-time win probability curves, batter-bowler match-up models, and 10,000-run Monte Carlo simulations."
+  },
+  {
+    "source": "Project: ProposalCraft",
+    "text": "ProposalCraft is an Autonomous Business RFP & Document Generator built with FastAPI, Python, LangGraph, ReportLab, python-docx, and Pydantic. It ingests client requirements and RFP documents, structures executive proposals using agentic planning, and exports production-ready PDF, PPTX, and DOCX files."
+  },
+  {
     "source": "Python, Pandas & Data Analysis",
-    "text": "I have hands-on experience working with Python data science and ETL tools, specifically Pandas and NumPy. In projects like my Cricket Analyzer Agent, I use Pandas for data cleaning, tabular transformations, time-series aggregations, and feature engineering for machine learning and Monte Carlo simulation pipelines."
-  },
-  {
-    "source": "Enterprise Multi-Agent Platform",
-    "text": "The Enterprise Multi-Agent Platform is an AI system comprising domain-specific agents for HR operations, supply-chain traceability, invoice management, customer engagement, architecture generation and web intelligence. I designed and implemented multi-agent workflows using LangGraph and LLM orchestration patterns; developed backend services with Django, FastAPI, PostgreSQL and Supabase; built React and TypeScript integrations; worked with Keycloak and Microsoft Azure AD/MSAL; maintained Postman automated tests; used Docker; migrated vector search from FAISS to Milvus; and built document ingestion pipelines using PyMuPDF, LlamaIndex and Docling."
-  },
-  {
-    "source": "HR Operations Agent",
-    "text": "The HR Operations Agent is a multimodal RAG-based assistant integrated with enterprise HR APIs. It supports employee profile search, leave/PTO lookup, employee details retrieval and leave information processing. I worked on intelligent routing between employee-related and leave-related queries."
-  },
-  {
-    "source": "Invoice & SQL Analytics Agent",
-    "text": "The Invoice & SQL Analytics Agent is an autonomous SQL agent for invoice analytics. I worked on schema discovery, metadata caching, natural-language-to-SQL generation, query validation, correction workflows and retry mechanisms. The workflow generates and executes SQL against PostgreSQL invoice databases and uses failures as feedback for correction."
-  },
-  {
-    "source": "Supply Chain Traceability Agent",
-    "text": "The Supply Chain Traceability Agent is an AI assistant for food supply-chain traceability and compliance. It supports batch tracking, shipment monitoring, supplier analysis and alert investigation. I worked on SQL generation for multi-table joins and pattern-based search strategies."
-  },
-  {
-    "source": "Specialized Enterprise Agents",
-    "text": "Specialized Enterprise Agents include a Customer Agent for sales and support workflows (demo requests, quotation requests, contact collection, support routing), a Web Search Agent integrating real-time external search with source attribution, and a Diagram Agent converting textual requirements into Mermaid flowcharts and architecture diagrams with rendering workflows."
-  },
-  {
-    "source": "Onelign AI Studio",
-    "text": "Onelign AI Studio is an enterprise AI workspace with specialized agents for document intelligence, legal workflows, architecture design, web search, SQL analytics, voice interactions and knowledge retrieval. I integrated and orchestrated AI agents, developed FastAPI and Django APIs, built retrieval and workflow mechanisms, implemented WebSocket-based real-time interactions and integrated external AI and search services."
-  },
-  {
-    "source": "Onelign AI Studio - Agents",
-    "text": "Onelign included Athena, an enterprise RAG assistant; Argus Search, a source-backed real-time web search agent; Atlas Query, a natural-language SQL analytics agent; Architect AI for architecture generation; NDA Generator and NDA Analyzer for legal workflows; MSA Generator; Patent Agent; VoxTranscribe for real-time voice/transcription over WebSockets; and EchoMind for audio intelligence."
-  },
-  {
-    "source": "AI Proposal Automation Platform",
-    "text": "The AI Proposal Automation Platform is an enterprise system for sales proposal and RFP workflows. I developed FastAPI backend workflows, RFP and proposal generator agents, Action Card-based AI assistance, AI-assisted business document generation, export functionality for PDF/DOCX/PPT/images, real-time editing, and image generation/editing capabilities using LLM APIs and Stable Diffusion."
-  },
-  {
-    "source": "Face Recognition & Geo-Mapping",
-    "text": "The Face Recognition & Geo-Mapping platform combines facial embeddings, vector similarity search, authentication and geospatial mapping. I investigated and resolved OAuth authentication and authorization issues, debugged integration problems across authentication providers and backend services, assisted with deployment validation and production troubleshooting, and contributed to root-cause analysis of access-control defects. Technologies included Python, FastAPI, Pinecone, OAuth, REST APIs, PostgreSQL and Docker."
-  },
-  {
-    "source": "Cricket Analyzer Agent",
-    "text": "The Cricket Analyzer Agent is an in-progress AI/ML decision-support platform for match strategy, player selection, simulation and post-match analysis. I contributed to FastAPI/Python backend workflows, IPL data ETL using Pandas, match-state tracking, feature engineering, model integration, analytics APIs and Monte Carlo simulation. Models include toss prediction, playing XI recommendation, batting-order optimization, bowling strategy, field placement, target-score prediction and chase strategy."
-  },
-  {
-    "source": "Recent Learning",
-    "text": "I recently learned vLLM and explored LLM model serving and deployment. I studied practical inference considerations including API-based model serving, GPU utilization, batching, inference latency and resource management. This expanded my understanding from consuming hosted LLM APIs toward the deployment and serving side of generative AI."
+    "text": "I have hands-on experience working with Python data science and ETL tools, specifically Pandas and NumPy. In projects like CricPredict, I use Pandas for data cleaning, tabular transformations, time-series aggregations, and feature engineering for machine learning and Monte Carlo simulation pipelines."
   },
   {
     "source": "Technical Approach",
-    "text": "I prefer treating LLMs as one component of a larger software system rather than assuming model output is automatically correct. My AI engineering approach includes retrieval, schema/context preparation, validation, execution feedback, retries, error handling and debugging across model, backend, API and database layers."
+    "text": "I treat LLMs as one component of a larger software system rather than assuming model output is automatically correct. My AI engineering approach includes grounding, schema/context preparation, validation, execution feedback, retries, error handling, and robust debugging across model, backend, API, and database layers."
   },
   {
     "source": "C++ and Systems",
-    "text": "I have working knowledge of C++, data structures and algorithms, object-oriented programming, STL, memory management, RAII, smart pointers, multithreading and concurrency. I also have working knowledge of TCP/IP networking and packet analysis with Wireshark."
+    "text": "I have working knowledge of C++, data structures and algorithms, object-oriented programming, STL, memory management, RAII, smart pointers, multithreading, and concurrency. I also have working knowledge of TCP/IP networking and packet analysis with Wireshark."
   },
   {
     "source": "Education",
-    "text": "I completed my B.Tech in Electrical and Electronics Engineering from NITK Surathkal (2020 - 2024), along with a minor in Mathematical & Computational Sciences."
+    "text": "I completed my B.Tech in Electrical and Electronics Engineering from National Institute of Technology Karnataka (NITK) Surathkal (2020 - 2024), along with a minor in Mathematical & Computational Sciences."
   },
   {
     "source": "Certifications",
-    "text": "I hold Microsoft Azure certifications AZ-900 and AZ-204."
+    "text": "I hold Microsoft Certified: Azure Developer Associate (AZ-204, Certification ID: E83442-7985BF) and Microsoft Certified: Azure Fundamentals (AZ-900, Certification ID: 3672EB-85BFR0)."
   }
 ]

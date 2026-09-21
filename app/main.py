@@ -51,45 +51,97 @@ async def health():
         "contact_provider": contact_agent.provider,
     }
 
+@app.get("/resume")
+@app.get("/api/resume")
+async def get_resume():
+    resume_path = STATIC_DIR / "Deepan_Kulandaisami_Resume.pdf"
+    if not resume_path.exists():
+        return {"error": "Resume file not found."}
+    return FileResponse(
+        resume_path,
+        media_type="application/pdf",
+        filename="Deepan_Kulandaisami_Resume.pdf",
+        headers={
+            "Content-Disposition": 'inline; filename="Deepan_Kulandaisami_Resume.pdf"',
+            "Cache-Control": "no-cache",
+        },
+    )
+
 @app.get("/api/projects")
 async def projects():
     return {
         "projects": [
             {
-                "title": "Enterprise Multi-Agent Platform",
-                "type": "Enterprise AI / Multi-Agent",
-                "description": "Enterprise AI platform with domain-specific agents for HR, invoice analytics, supply-chain traceability, customer engagement and web intelligence.",
-                "technologies": ["Python", "FastAPI", "Django", "PostgreSQL", "LangGraph", "RAG", "Milvus", "Docker"],
+                "id": "nexusgraph",
+                "title": "NexusGraph: Multi-Agent Orchestrator",
+                "type": "Agentic AI / LangGraph",
+                "category": "agents",
+                "badge": "Agentic Flow",
+                "description": "Self-directed multi-agent system coordinating specialized planner, code synthesis, schema validation, and recovery sub-agents with stateful cycles and human-in-the-loop checkpoints.",
+                "technologies": ["FastAPI", "LangGraph", "Python", "Qdrant", "PostgreSQL", "WebSockets", "Docker"],
+                "demo_url": "https://nexusgraph.demo.app",
+                "github_url": "https://github.com/Deeps72-ux/nexusgraph-multiagent-orchestrator",
+                "featured": True,
             },
             {
-                "title": "Natural Language → SQL Agent",
-                "type": "AI Agent / Backend",
-                "description": "Agent workflow that discovers schema, generates SQL from natural language, validates queries, executes them and uses failures for correction and retry.",
-                "technologies": ["Python", "LangGraph", "PostgreSQL", "LLMs", "FastAPI"],
+                "id": "documind",
+                "title": "DocuMind: Agentic Multimodal RAG",
+                "type": "RAG / Document Intelligence",
+                "category": "agents",
+                "badge": "RAG System",
+                "description": "Production-grade document intelligence engine with OCR, layout-aware PDF chunking, hybrid dense/sparse vector retrieval, cross-encoder reranking, and hallucination guardrails.",
+                "technologies": ["FastAPI", "LangChain", "Milvus", "PyMuPDF", "Tesseract", "Groq LLM", "Redis"],
+                "demo_url": "https://documind.demo.app",
+                "github_url": "https://github.com/Deeps72-ux/documind-agentic-rag",
+                "featured": True,
             },
             {
-                "title": "Onelign AI Studio",
-                "type": "Enterprise AI Workspace",
-                "description": "Unified AI workspace containing RAG, web search, SQL analytics, architecture generation, legal-document workflows and real-time voice interactions.",
-                "technologies": ["FastAPI", "Django", "React", "TypeScript", "LangGraph", "WebSockets"],
+                "id": "querygenie",
+                "title": "QueryGenie: Self-Healing Text-to-SQL",
+                "type": "FastAPI / Database AI",
+                "category": "fastapi",
+                "badge": "FastAPI Backend",
+                "description": "Autonomous text-to-SQL backend service with dynamic schema discovery, AST query validation, sandbox trial execution, and error-feedback loop for query correction.",
+                "technologies": ["FastAPI", "PostgreSQL", "LangGraph", "SQLGlot", "Pydantic", "Docker"],
+                "demo_url": "https://querygenie.demo.app",
+                "github_url": "https://github.com/Deeps72-ux/querygenie-nl-sql-studio",
+                "featured": True,
             },
             {
-                "title": "AI Proposal Automation Platform",
-                "type": "AI / Proposal Automation",
-                "description": "AI-powered proposal and RFP automation platform with document generation, AI-assisted editing and image generation/editing.",
-                "technologies": ["FastAPI", "Python", "LLMs", "Stable Diffusion", "PostgreSQL"],
+                "id": "omnivoice",
+                "title": "OmniVoice: Real-Time Streaming Agent",
+                "type": "Voice AI / WebSockets",
+                "category": "fastapi",
+                "badge": "FastAPI & WebSockets",
+                "description": "Ultra low-latency duplex voice agent backend utilizing WebSockets, OpenAI Whisper streaming transcription, asynchronous LLM tool-calling, and speech synthesis.",
+                "technologies": ["FastAPI", "WebSockets", "OpenAI Whisper", "Sarvam AI", "FFmpeg", "AsyncIO"],
+                "demo_url": "https://omnivoice.demo.app",
+                "github_url": "https://github.com/Deeps72-ux/omnivoice-streaming-agent",
+                "featured": False,
             },
             {
-                "title": "Cricket Analyzer Agent",
-                "type": "ML / Analytics",
-                "description": "Decision-support platform using cricket data, predictive models, feature engineering and Monte Carlo simulation.",
-                "technologies": ["Python", "FastAPI", "PostgreSQL", "scikit-learn", "Monte Carlo"],
+                "id": "cricpredict",
+                "title": "CricPredict: ML Match Analytics",
+                "type": "Machine Learning / Analytics",
+                "category": "ml",
+                "badge": "Machine Learning",
+                "description": "Predictive analytics engine analyzing ball-by-ball cricket data. Features real-time win probability curves, batter-bowler match-up models, and 10,000-run Monte Carlo simulations.",
+                "technologies": ["Python", "FastAPI", "Scikit-Learn", "Pandas", "NumPy", "XGBoost", "Streamlit"],
+                "demo_url": "https://cricpredict.demo.app",
+                "github_url": "https://github.com/Deeps72-ux/cricpredict-ml-engine",
+                "featured": False,
             },
             {
-                "title": "Face Recognition & Geo-Mapping",
-                "type": "Computer Vision / Backend",
-                "description": "Facial recognition and vector similarity platform with geo-mapping and OAuth authentication workflows.",
-                "technologies": ["Python", "FastAPI", "Pinecone", "OAuth", "PostgreSQL", "Docker"],
+                "id": "proposalcraft",
+                "title": "ProposalCraft: Agentic Proposal Engine",
+                "type": "Generative AI / DocGen",
+                "category": "agents",
+                "badge": "AI Workflow",
+                "description": "Agentic pipeline that converts raw client requests and RFP documents into structured business proposals with multi-format export workflows (PDF, PPTX, DOCX).",
+                "technologies": ["FastAPI", "Python", "LangGraph", "ReportLab", "python-docx", "Pydantic"],
+                "demo_url": "https://proposalcraft.demo.app",
+                "github_url": "https://github.com/Deeps72-ux/proposalcraft-agent",
+                "featured": False,
             },
         ]
     }

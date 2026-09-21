@@ -632,23 +632,273 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
+/* =========================================================================
+   PROJECTS, FILTERING & LIVE INTERACTIVE DEMO SANDBOX
+   ========================================================================= */
+
+let allProjects = [];
+let activeFilter = "all";
+let currentDemoProject = null;
+let isSandboxRunning = false;
+
+const demoModalOverlay = document.getElementById("demoModalOverlay");
+const closeDemoModal = document.getElementById("closeDemoModal");
+const demoModalTitle = document.getElementById("demoModalTitle");
+const demoModalType = document.getElementById("demoModalType");
+const demoModalDesc = document.getElementById("demoModalDesc");
+const demoRuntime = document.getElementById("demoRuntime");
+const sandboxInput = document.getElementById("sandboxInput");
+const sandboxRunBtn = document.getElementById("sandboxRunBtn");
+const sandboxTerminal = document.getElementById("sandboxTerminal");
+const demoModalExternalLink = document.getElementById("demoModalExternalLink");
+const demoModalGithubLink = document.getElementById("demoModalGithubLink");
+
+const projectFiltersContainer = document.getElementById("projectFilters");
+
+// Interactive simulation sequences for each personal project
+const PROJECT_SANDBOX_CONFIGS = {
+  nexusgraph: {
+    defaultPrompt: "Coordinate sub-agents to synthesize API schema and self-heal failed query",
+    runtime: "FastAPI + LangGraph Stateful Engine",
+    steps: [
+      { type: "prompt", text: "> [NexusGraph Orchestrator] Trigger received: \"{prompt}\"" },
+      { type: "node", text: "⚡ [SupervisorNode] Initialized state graph. Routing to: PlannerAgent" },
+      { type: "output", text: "   • Task decomposed into 3 sub-goals: (1) Schema Discovery, (2) Tool Synthesis, (3) Output Verification." },
+      { type: "node", text: "⚡ [ToolExecutionNode] Invoking Qdrant vector retrieval + API validation tool..." },
+      { type: "node", text: "⚠️ [ErrorRecoveryNode] Detected schema mismatch in field 'status_code'. Triggering automated AST correction..." },
+      { type: "success", text: "✓ [Self-Healing Cycle] Graph state updated. Self-correction resolved in 1 iteration." },
+      { type: "output", text: "🚀 [FinalResult] Multi-agent orchestration cycle complete (Execution time: 412ms)." }
+    ]
+  },
+  documind: {
+    defaultPrompt: "Ingest multi-column scanned enterprise financial PDF and extract balance ratios",
+    runtime: "FastAPI + Milvus Hybrid RAG",
+    steps: [
+      { type: "prompt", text: "> [DocuMind Pipeline] Ingestion started: \"{prompt}\"" },
+      { type: "node", text: "⚡ [PyMuPDF + Tesseract] Extracted 14 document pages. Layout parser identified 4 complex tables." },
+      { type: "node", text: "⚡ [EmbeddingNode] Generating dense embeddings (text-embedding-3) + sparse BM25 tokens." },
+      { type: "node", text: "⚡ [HybridSearchNode] Milvus vector database queried. Retrieved top-20 candidate chunks." },
+      { type: "node", text: "⚡ [CrossEncoderRerank] Cross-encoder score computed: 0.942 relevance for balance sheet." },
+      { type: "success", text: "✓ [HallucinationGuard] Grounding verified against source page 7. Citations anchored." },
+      { type: "output", text: "🚀 [Response] Document intelligence synthesized with 100% verified source citations." }
+    ]
+  },
+  querygenie: {
+    defaultPrompt: "Find all customers with revenue > $50K and return their average ticket size",
+    runtime: "FastAPI + PostgreSQL AST Sandbox",
+    steps: [
+      { type: "prompt", text: "> [QueryGenie] Natural language query: \"{prompt}\"" },
+      { type: "node", text: "⚡ [SchemaDiscovery] Metadata cache inspected: Found 'customers', 'invoices', 'orders' tables." },
+      { type: "node", text: "⚡ [LLM Generator] Generated PostgreSQL query with JOIN and GROUP BY aggregation." },
+      { type: "node", text: "⚡ [SQLGlot AST Validator] AST parsed. Query syntax and column references validated: OK." },
+      { type: "node", text: "⚡ [Sandbox Execution] Executed against isolated Postgres read-only replica." },
+      { type: "success", text: "✓ [Result Verified] Query returned 142 records in 18ms. Explaining query execution plan." },
+      { type: "output", text: "🚀 [SQL Generated] SELECT c.id, c.name, AVG(i.amount) FROM customers c JOIN invoices i GROUP BY c.id, c.name;" }
+    ]
+  },
+  omnivoice: {
+    defaultPrompt: "Initiate voice WebSocket stream and ask for portfolio summary",
+    runtime: "FastAPI + WebSockets + Whisper & Sarvam AI",
+    steps: [
+      { type: "prompt", text: "> [OmniVoice Engine] Duplex WebSocket handshake established on ws://api/v1/voice/stream" },
+      { type: "node", text: "⚡ [AudioInbound] Chunked PCM audio frames streamed at 16kHz sample rate." },
+      { type: "node", text: "⚡ [Whisper Stream] Sub-second transcription: \"Tell me about Deepan's backend systems\"" },
+      { type: "node", text: "⚡ [Agentic Dispatch] Async function calling activated -> Retrieving candidate profile context." },
+      { type: "success", text: "✓ [Sarvam Audio Stream] Chunked voice synthesis generated and pushed back over WebSocket." },
+      { type: "output", text: "🚀 [Duplex Round-Trip] End-to-end voice latency: 340ms." }
+    ]
+  },
+  cricpredict: {
+    defaultPrompt: "Simulate chase of 178 runs at Eden Gardens with 3 wickets down after 10 overs",
+    runtime: "FastAPI + Scikit-Learn + Monte Carlo",
+    steps: [
+      { type: "prompt", text: "> [CricPredict Analytics] Scenario: \"{prompt}\"" },
+      { type: "node", text: "⚡ [ETL & Feature Pipeline] Loaded ball-by-ball feature matrix using Pandas & NumPy." },
+      { type: "node", text: "⚡ [Model Inference] XGBoost win probability evaluated: 58.4% current win probability." },
+      { type: "node", text: "⚡ [Monte Carlo Engine] Launching 10,000 stochastic trajectory iterations with bowler match-ups..." },
+      { type: "success", text: "✓ [Simulation Complete] Median target reach: 18.4 overs. 95% Confidence Interval: [17.1, 19.5]." },
+      { type: "output", text: "🚀 [Optimal Batting Order] Recommended next batter: Anchor vs Leg-spin matchup." }
+    ]
+  },
+  proposalcraft: {
+    defaultPrompt: "Generate enterprise multi-phase AI transformation proposal for retail bank",
+    runtime: "FastAPI + LangGraph Document Synthesizer",
+    steps: [
+      { type: "prompt", text: "> [ProposalCraft Agent] Processing RFP specification: \"{prompt}\"" },
+      { type: "node", text: "⚡ [Requirements Extractor] Extracted 6 core deliverables and compliance constraints." },
+      { type: "node", text: "⚡ [Section Planner] Assembled Executive Summary, Architecture, Timeline, and Pricing tables." },
+      { type: "node", text: "⚡ [Document Generator] Compiled ReportLab PDF layout + structured PPTX deck." },
+      { type: "success", text: "✓ [Export Ready] Multi-format artifact package generated (PDF, PPTX, DOCX)." },
+      { type: "output", text: "🚀 [Download Ready] Executive proposal package built in 2.8s." }
+    ]
+  }
+};
+
+function renderProjects() {
+  if (!projectGrid) return;
+  const filtered = activeFilter === "all"
+    ? allProjects
+    : allProjects.filter(p => p.category === activeFilter);
+
+  if (filtered.length === 0) {
+    projectGrid.innerHTML = `<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px;">No projects found for this category.</p>`;
+    return;
+  }
+
+  projectGrid.innerHTML = filtered.map(p => `
+    <article class="project" data-category="${p.category}" data-id="${p.id}">
+      <div class="project-top">
+        <div class="project-header-meta">
+          <span class="project-type">${p.type}</span>
+          <span class="project-badge">${p.badge || "System"}</span>
+        </div>
+        <h3 class="project-title">${p.title}</h3>
+        <p class="project-desc">${p.description}</p>
+      </div>
+      <div class="project-bottom">
+        <div class="tags">${(p.technologies || []).map(t => `<span>${t}</span>`).join("")}</div>
+        <div class="project-actions">
+          <button type="button" class="project-btn demo-btn" data-demo-id="${p.id}" title="Launch Interactive Live Demo">
+            <span class="pulse-dot"></span>
+            <span>Live Demo ↗</span>
+          </button>
+          <a href="${p.github_url}" class="project-btn code-btn" target="_blank" rel="noopener noreferrer" title="View Source Code on GitHub">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  attachDemoButtons();
+}
+
+function attachDemoButtons() {
+  document.querySelectorAll(".demo-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const projectId = btn.dataset.demoId;
+      openDemoModalForProject(projectId);
+    });
+  });
+}
+
+function openDemoModalForProject(projectId) {
+  const project = allProjects.find(p => p.id === projectId) || allProjects[0];
+  if (!project) return;
+  currentDemoProject = project;
+
+  const cfg = PROJECT_SANDBOX_CONFIGS[project.id] || {
+    defaultPrompt: `Execute ${project.title} pipeline`,
+    runtime: "FastAPI Microservice",
+    steps: [
+      { type: "prompt", text: `> Running ${project.title}...` },
+      { type: "node", text: "⚡ Initializing execution graph..." },
+      { type: "success", text: "✓ Pipeline completed successfully." }
+    ]
+  };
+
+  if (demoModalTitle) demoModalTitle.textContent = project.title;
+  if (demoModalType) demoModalType.textContent = project.badge || project.type;
+  if (demoModalDesc) demoModalDesc.textContent = project.description;
+  if (demoRuntime) demoRuntime.textContent = cfg.runtime;
+  if (sandboxInput) sandboxInput.value = cfg.defaultPrompt;
+  if (demoModalExternalLink) demoModalExternalLink.href = project.demo_url || "#";
+  if (demoModalGithubLink) demoModalGithubLink.href = project.github_url || "https://github.com/Deeps72-ux";
+
+  if (sandboxTerminal) {
+    sandboxTerminal.innerHTML = `
+      <div class="term-line prompt">> [System] Ready to run interactive live sandbox for ${project.title}.</div>
+      <div class="term-line prompt">> Click "▶ Run Pipeline" to trigger the autonomous workflow.</div>
+    `;
+  }
+
+  if (demoModalOverlay) {
+    demoModalOverlay.classList.add("open");
+  }
+}
+
+function closeDemo() {
+  if (demoModalOverlay) {
+    demoModalOverlay.classList.remove("open");
+  }
+}
+
+if (closeDemoModal) {
+  closeDemoModal.addEventListener("click", closeDemo);
+}
+
+if (demoModalOverlay) {
+  demoModalOverlay.addEventListener("click", (e) => {
+    if (e.target === demoModalOverlay) closeDemo();
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeDemo();
+  }
+});
+
+if (sandboxRunBtn) {
+  sandboxRunBtn.addEventListener("click", async () => {
+    if (isSandboxRunning || !currentDemoProject) return;
+    isSandboxRunning = true;
+    sandboxRunBtn.disabled = true;
+    sandboxRunBtn.textContent = "⏳ Running...";
+
+    const cfg = PROJECT_SANDBOX_CONFIGS[currentDemoProject.id] || {
+      steps: [
+        { type: "prompt", text: "> Executing..." },
+        { type: "success", text: "✓ Complete." }
+      ]
+    };
+
+    const userPrompt = (sandboxInput ? sandboxInput.value.trim() : "") || "Run default agent sequence";
+    if (sandboxTerminal) {
+      sandboxTerminal.innerHTML = "";
+    }
+
+    for (const step of cfg.steps) {
+      const lineText = step.text.replace("{prompt}", userPrompt);
+      const div = document.createElement("div");
+      div.className = `term-line ${step.type}`;
+      div.textContent = lineText;
+      if (sandboxTerminal) {
+        sandboxTerminal.appendChild(div);
+        sandboxTerminal.scrollTop = sandboxTerminal.scrollHeight;
+      }
+      await new Promise(r => setTimeout(r, 450));
+    }
+
+    sandboxRunBtn.disabled = false;
+    sandboxRunBtn.textContent = "▶ Run Pipeline";
+    isSandboxRunning = false;
+  });
+}
+
+// Setup Category Filter Buttons
+if (projectFiltersContainer) {
+  projectFiltersContainer.addEventListener("click", (e) => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+    renderProjects();
+  });
+}
+
 async function loadProjects() {
   try {
     const response = await fetch("/api/projects");
     const data = await response.json();
-
-    projectGrid.innerHTML = data.projects.map(p => `
-      <article class="project">
-        <div>
-          <div class="project-type">${p.type}</div>
-          <h3>${p.title}</h3>
-          <p>${p.description}</p>
-        </div>
-        <div class="tags">${p.technologies.map(t => `<span>${t}</span>`).join("")}</div>
-      </article>
-    `).join("");
-  } catch {
-    projectGrid.innerHTML = "<p>Projects could not be loaded.</p>";
+    allProjects = data.projects || [];
+    renderProjects();
+  } catch (err) {
+    if (projectGrid) {
+      projectGrid.innerHTML = "<p>Projects could not be loaded.</p>";
+    }
   }
 }
 

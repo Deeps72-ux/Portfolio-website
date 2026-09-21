@@ -532,6 +532,10 @@
           <a href="#projects">Work</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
+          <a href="/resume" target="_blank" download="Deepan_Kulandaisami_Resume.pdf" class="nav-resume-btn" title="Download Deepan's Resume (PDF)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Resume ⤓
+          </a>
         </nav>
         <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Switch theme">
           <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -566,6 +570,10 @@
         </p>
         <div class="buttons">
           <a class="btn primary" href="#projects">View projects</a>
+          <a class="btn secondary resume-hero-btn" href="/resume" target="_blank" download="Deepan_Kulandaisami_Resume.pdf" title="Download Deepan's Verified Resume PDF">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download Resume
+          </a>
           <a class="btn secondary" href="https://github.com/Deeps72-ux" target="_blank" rel="noreferrer">GitHub ↗</a>
         </div>
       </div>
@@ -584,8 +592,9 @@
         <p class="ask-intro">Have a question about my experience, projects, tech stack, or career preferences?</p>
         <div class="suggestions">
           <button data-question="Give a brief introduction about yourself and your background.">Tell me about yourself.</button>
-          <button data-question="Where do you work currently, and what are your location & salary preferences?">Current role, location & package?</button>
-          <button data-question="What AI & backend projects have you built?">What AI projects have you built?</button>
+          <button data-question="Where can I download your resume?">Download your resume?</button>
+          <button data-question="What AI agentic flows and FastAPI projects have you built?">AI & FastAPI projects?</button>
+          <button data-question="Where do you work currently, and what are your location & salary preferences?">Current role & package?</button>
         </div>
         <div class="ask-actions-row">
           <button class="open-chat" id="openChat">Talk with my Digital Twin <span>→</span></button>
@@ -624,8 +633,16 @@
     <section id="projects" class="section projects-section">
       <div class="section-label">02 / SELECTED WORK</div>
       <div class="section-heading">
-        <h2>Things I've built.</h2>
-        <p>Professional projects and engineering work across AI, backend systems and analytics.</p>
+        <div>
+          <h2>Featured AI & Backend Systems</h2>
+          <p class="section-subtext">Personal & open-source implementations featuring autonomous agentic flows, FastAPI microservices, and predictive ML.</p>
+        </div>
+        <div class="project-filters" id="projectFilters">
+          <button type="button" class="filter-btn active" data-filter="all">All</button>
+          <button type="button" class="filter-btn" data-filter="agents">AI Agents</button>
+          <button type="button" class="filter-btn" data-filter="fastapi">FastAPI Backends</button>
+          <button type="button" class="filter-btn" data-filter="ml">Machine Learning</button>
+        </div>
       </div>
       <div class="project-grid" id="projectGrid"></div>
     </section>
@@ -821,10 +838,11 @@
         <button type="button" class="voice-cancel-btn" id="voiceCancelBtn">Stop</button>
       </div>
       <div class="messages" id="messages">
-        <div class="message bot">Hey there! I'm Deepan Kulandaisami's digital twin. Ask me anything about my work at Bonbloc AI, my technical stack, projects, math background, or what I'm looking for in my next role!</div>
+        <div class="message bot">Hey there! I'm Deepan Kulandaisami's digital twin. Ask me anything about my engineering background, technical stack, personal AI agentic flows & FastAPI systems, math foundations, or how to download my resume!</div>
       </div>
       <div class="chat-suggestions">
-        <button data-question="What is your experience with FastAPI and AI agents?">FastAPI & AI agents?</button>
+        <button data-question="Where can I download your resume?">Download resume ⤓</button>
+        <button data-question="What personal AI agentic flow and FastAPI projects have you built?">AI & FastAPI projects?</button>
         <button data-question="Where do you work currently, and what are your location and salary expectations?">Location & package?</button>
         <button data-question="Tell me about your passion for mathematics and algorithms.">Math & algorithms?</button>
       </div>
@@ -836,7 +854,49 @@
     </div>
   </div>
 
-  <script src="/static/js/app.js?v=7_03"></script>
+  <!-- Interactive Live Demo Modal -->
+  <div class="demo-modal-overlay" id="demoModalOverlay">
+    <div class="demo-modal" id="demoModal">
+      <div class="demo-modal-header">
+        <div class="demo-modal-title-group">
+          <span class="demo-modal-pill" id="demoModalType">Agentic Flow</span>
+          <h3 id="demoModalTitle">Live Demo Sandbox</h3>
+        </div>
+        <button type="button" class="demo-modal-close" id="closeDemoModal" aria-label="Close Demo">✕</button>
+      </div>
+      <div class="demo-modal-body">
+        <div class="demo-status-row">
+          <span class="demo-status-indicator">● Interactive Simulation Sandbox Active</span>
+          <span class="demo-runtime-text" id="demoRuntime">FastAPI + Async Engine</span>
+        </div>
+        <p class="demo-desc" id="demoModalDesc"></p>
+        
+        <div class="demo-interactive-sandbox" id="demoSandbox">
+          <div class="sandbox-controls">
+            <label id="sandboxInputLabel">Interactive Execution Trigger:</label>
+            <div class="sandbox-input-row">
+              <input type="text" id="sandboxInput" class="sandbox-input" value="Run multi-hop agent workflow">
+              <button type="button" class="sandbox-run-btn" id="sandboxRunBtn">▶ Run Pipeline</button>
+            </div>
+          </div>
+          <div class="sandbox-terminal" id="sandboxTerminal">
+            <div class="term-line prompt">> Staging sandbox initialized. Ready for execution...</div>
+          </div>
+        </div>
+        
+        <div class="demo-links-row">
+          <a href="#" id="demoModalExternalLink" target="_blank" rel="noopener noreferrer" class="btn primary demo-launch-ext-btn">
+            Launch Standalone App ↗
+          </a>
+          <a href="#" id="demoModalGithubLink" target="_blank" rel="noopener noreferrer" class="btn secondary">
+            GitHub Repository ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js?v=7_04"></script>
 </body>
 
 </html>
