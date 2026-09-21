@@ -79,9 +79,10 @@ async def projects():
                 "badge": "Agentic Flow",
                 "description": "Self-directed multi-agent system coordinating specialized planner, code synthesis, schema validation, and recovery sub-agents with stateful cycles and human-in-the-loop checkpoints.",
                 "technologies": ["FastAPI", "LangGraph", "Python", "Qdrant", "PostgreSQL", "WebSockets", "Docker"],
-                "demo_url": "https://nexusgraph.demo.app",
+                "demo_url": "https://nexusgraph-multiagent-orchestrator.onrender.com",
                 "github_url": "https://github.com/Deeps72-ux/nexusgraph-multiagent-orchestrator",
                 "featured": True,
+                "is_live": True,
             },
             {
                 "id": "documind",
@@ -94,6 +95,7 @@ async def projects():
                 "demo_url": "https://documind.demo.app",
                 "github_url": "https://github.com/Deeps72-ux/documind-agentic-rag",
                 "featured": True,
+                "is_live": False,
             },
             {
                 "id": "querygenie",
@@ -106,6 +108,7 @@ async def projects():
                 "demo_url": "https://querygenie.demo.app",
                 "github_url": "https://github.com/Deeps72-ux/querygenie-nl-sql-studio",
                 "featured": True,
+                "is_live": False,
             },
             {
                 "id": "omnivoice",
@@ -115,9 +118,10 @@ async def projects():
                 "badge": "FastAPI & WebSockets",
                 "description": "Ultra low-latency duplex voice agent backend utilizing WebSockets, OpenAI Whisper streaming transcription, asynchronous LLM tool-calling, and speech synthesis.",
                 "technologies": ["FastAPI", "WebSockets", "OpenAI Whisper", "Sarvam AI", "FFmpeg", "AsyncIO"],
-                "demo_url": "https://omnivoice.demo.app",
+                "demo_url": "https://omnivoice-streaming-agent.onrender.com/",
                 "github_url": "https://github.com/Deeps72-ux/omnivoice-streaming-agent",
                 "featured": False,
+                "is_live": True,
             },
             {
                 "id": "cricpredict",
@@ -130,6 +134,7 @@ async def projects():
                 "demo_url": "https://cricpredict.demo.app",
                 "github_url": "https://github.com/Deeps72-ux/cricpredict-ml-engine",
                 "featured": False,
+                "is_live": False,
             },
             {
                 "id": "proposalcraft",
@@ -142,6 +147,7 @@ async def projects():
                 "demo_url": "https://proposalcraft.demo.app",
                 "github_url": "https://github.com/Deeps72-ux/proposalcraft-agent",
                 "featured": False,
+                "is_live": False,
             },
         ]
     }

@@ -21,7 +21,7 @@
   },
   {
     "source": "Project: NexusGraph",
-    "text": "NexusGraph is an Autonomous Multi-Agent Orchestrator built using FastAPI, LangGraph, Python, Qdrant vector database, PostgreSQL, WebSockets, and Docker. It coordinates specialized sub-agents (Planner, Code Synthesizer, Query Validator, and Execution Engine) with stateful cycles, human-in-the-loop approvals, and self-healing error recovery. Users can view the live demo and inspect the open-source code on GitHub."
+    "text": "NexusGraph is an Autonomous Multi-Agent Orchestrator built using FastAPI, LangGraph, Python, Qdrant vector database, PostgreSQL, WebSockets, and Docker. It coordinates specialized sub-agents (Planner, Code Synthesizer, Query Validator, and Execution Engine) with stateful cycles, human-in-the-loop approvals, and self-healing error recovery. The project is live and deployed on Render at https://nexusgraph-multiagent-orchestrator.onrender.com with open-source code on GitHub at https://github.com/Deeps72-ux/nexusgraph-multiagent-orchestrator."
   },
   {
     "source": "Project: DocuMind",
@@ -33,7 +33,11 @@
   },
   {
     "source": "Project: OmniVoice",
-    "text": "OmniVoice is a Real-Time Streaming Conversational Agent built with FastAPI, WebSockets, OpenAI Whisper, Sarvam AI voice APIs, FFmpeg, and AsyncIO. It provides duplex voice-to-voice interaction with sub-second latency, streaming audio transcription, asynchronous tool calling, and expressive speech synthesis."
+    "text": "OmniVoice is a Real-Time Streaming Conversational Agent built with FastAPI, WebSockets, OpenAI Whisper, Sarvam AI voice APIs, FFmpeg, and AsyncIO. It provides duplex voice-to-voice interaction with sub-second latency, streaming audio transcription, asynchronous tool calling, and expressive speech synthesis. The project is live and deployed on Render at https://omnivoice-streaming-agent.onrender.com/ with open-source code on GitHub at https://github.com/Deeps72-ux/omnivoice-streaming-agent."
+  },
+  {
+    "source": "Live Deployed Projects",
+    "text": "Deepan has deployed live production applications on Render: 1) NexusGraph (Autonomous Multi-Agent Orchestration Engine) is live at https://nexusgraph-multiagent-orchestrator.onrender.com. 2) OmniVoice (Real-Time Streaming Voice AI Agent) is live at https://omnivoice-streaming-agent.onrender.com/. Visitors can explore, test, and interact directly with both live web services."
   },
   {
     "source": "Project: CricPredict",

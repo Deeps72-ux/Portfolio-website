@@ -767,8 +767,8 @@
 
         <!-- Input & Dispatch Controls -->
         <div class="contact-console-footer">
-          <form class="c-chat-form" id="contactChatForm">
-            <input id="contactChatInput" autocomplete="off" placeholder="Share your name, email, or requirement..." maxlength="1000">
+          <form class="c-chat-form" id="contactChatForm" onsubmit="return false;">
+            <input type="text" id="contactChatInput" autocomplete="off" placeholder="Share your name, email, or requirement..." maxlength="1000">
             <button type="submit" id="contactChatSubmit" title="Send message">
               <span>Send</span> ➔
             </button>
@@ -896,7 +896,7 @@
     </div>
   </div>
 
-  <script src="/static/js/app.js?v=7_04"></script>
+  <script src="/static/js/app.js?v=7_05"></script>
 </body>
 
 </html>

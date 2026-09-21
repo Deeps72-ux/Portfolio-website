@@ -750,7 +750,7 @@ function renderProjects() {
       <div class="project-top">
         <div class="project-header-meta">
           <span class="project-type">${p.type}</span>
-          <span class="project-badge">${p.badge || "System"}</span>
+          <span class="project-badge ${p.is_live ? 'badge-live' : ''}">${p.is_live ? 'Live on Render' : (p.badge || "System")}</span>
         </div>
         <h3 class="project-title">${p.title}</h3>
         <p class="project-desc">${p.description}</p>
@@ -758,10 +758,20 @@ function renderProjects() {
       <div class="project-bottom">
         <div class="tags">${(p.technologies || []).map(t => `<span>${t}</span>`).join("")}</div>
         <div class="project-actions">
-          <button type="button" class="project-btn demo-btn" data-demo-id="${p.id}" title="Launch Interactive Live Demo">
-            <span class="pulse-dot"></span>
-            <span>Live Demo ↗</span>
-          </button>
+          ${p.is_live ? `
+            <a href="${p.demo_url}" class="project-btn demo-btn live-link-btn" target="_blank" rel="noopener noreferrer" title="Launch Live App on Render">
+              <span class="pulse-dot"></span>
+              <span>Live App ↗</span>
+            </a>
+            <button type="button" class="project-btn code-btn sandbox-trigger-btn" data-demo-id="${p.id}" title="Launch Interactive Simulation Sandbox">
+              <span>Sandbox ⚙</span>
+            </button>
+          ` : `
+            <button type="button" class="project-btn demo-btn" data-demo-id="${p.id}" title="Launch Interactive Live Demo">
+              <span class="pulse-dot"></span>
+              <span>Simulation ↗</span>
+            </button>
+          `}
           <a href="${p.github_url}" class="project-btn code-btn" target="_blank" rel="noopener noreferrer" title="View Source Code on GitHub">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             <span>GitHub</span>
@@ -775,11 +785,13 @@ function renderProjects() {
 }
 
 function attachDemoButtons() {
-  document.querySelectorAll(".demo-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.demoId;
-      openDemoModalForProject(projectId);
-    });
+  document.querySelectorAll(".demo-btn, .sandbox-trigger-btn").forEach(btn => {
+    if (btn.tagName === "BUTTON") {
+      btn.addEventListener("click", () => {
+        const projectId = btn.dataset.demoId;
+        openDemoModalForProject(projectId);
+      });
+    }
   });
 }
 
@@ -798,12 +810,31 @@ function openDemoModalForProject(projectId) {
     ]
   };
 
+  const demoStatusIndicator = document.querySelector(".demo-status-indicator");
   if (demoModalTitle) demoModalTitle.textContent = project.title;
-  if (demoModalType) demoModalType.textContent = project.badge || project.type;
+  if (demoModalType) demoModalType.textContent = project.is_live ? "Live Deployment" : (project.badge || project.type);
   if (demoModalDesc) demoModalDesc.textContent = project.description;
-  if (demoRuntime) demoRuntime.textContent = cfg.runtime;
+  if (demoRuntime) demoRuntime.textContent = project.is_live ? `${cfg.runtime} • Production on Render` : cfg.runtime;
   if (sandboxInput) sandboxInput.value = cfg.defaultPrompt;
-  if (demoModalExternalLink) demoModalExternalLink.href = project.demo_url || "#";
+  if (demoModalExternalLink) {
+    demoModalExternalLink.href = project.demo_url || "#";
+    if (project.is_live) {
+      demoModalExternalLink.innerHTML = '<span class="pulse-dot"></span> <span>Launch Live Render App ↗</span>';
+      demoModalExternalLink.classList.add("btn-live-accent");
+    } else {
+      demoModalExternalLink.innerHTML = '<span>Launch Standalone App ↗</span>';
+      demoModalExternalLink.classList.remove("btn-live-accent");
+    }
+  }
+  if (demoStatusIndicator) {
+    if (project.is_live) {
+      demoStatusIndicator.textContent = "● Live Production Deployment on Render";
+      demoStatusIndicator.classList.add("status-live");
+    } else {
+      demoStatusIndicator.textContent = "● Interactive Simulation Sandbox Active";
+      demoStatusIndicator.classList.remove("status-live");
+    }
+  }
   if (demoModalGithubLink) demoModalGithubLink.href = project.github_url || "https://github.com/Deeps72-ux";
 
   if (sandboxTerminal) {
@@ -903,3 +934,317 @@ async function loadProjects() {
 }
 
 loadProjects();
+
+/* =========================================================================
+   LUXURY CONTACT CONCIERGE AGENT (Autonomous Intake & Direct Dispatch)
+   ========================================================================= */
+
+const contactChatForm = document.getElementById("contactChatForm");
+const contactChatInput = document.getElementById("contactChatInput");
+const contactChatSubmit = document.getElementById("contactChatSubmit");
+const contactMessages = document.getElementById("contactMessages");
+const contactChips = document.querySelectorAll("[data-contact-starter]");
+const trackName = document.getElementById("trackName");
+const trackEmail = document.getElementById("trackEmail");
+const trackCompany = document.getElementById("trackCompany");
+const directDispatchBtn = document.getElementById("directDispatchBtn");
+const dispatchHint = document.getElementById("dispatchHint");
+const dispatchBanner = document.getElementById("dispatchBanner");
+const dispatchBannerDetail = document.getElementById("dispatchBannerDetail");
+
+const contactLead = {
+  name: null,
+  email: null,
+  company: null,
+  message: null
+};
+
+const contactHistory = [];
+const contactTranscript = [];
+let isContactSending = false;
+let isContactDispatched = false;
+
+function updateContactHUD() {
+  if (trackName) {
+    const valEl = trackName.querySelector(".hud-val");
+    if (valEl) {
+      if (contactLead.name) {
+        valEl.textContent = contactLead.name;
+        trackName.classList.add("captured");
+      } else {
+        valEl.textContent = "Waiting...";
+        trackName.classList.remove("captured");
+      }
+    }
+  }
+
+  if (trackEmail) {
+    const valEl = trackEmail.querySelector(".hud-val");
+    if (valEl) {
+      if (contactLead.email) {
+        valEl.textContent = contactLead.email;
+        trackEmail.classList.add("captured");
+      } else {
+        valEl.textContent = "Waiting...";
+        trackEmail.classList.remove("captured");
+      }
+    }
+  }
+
+  if (trackCompany) {
+    const valEl = trackCompany.querySelector(".hud-val");
+    if (valEl) {
+      if (contactLead.company) {
+        valEl.textContent = contactLead.company;
+        trackCompany.classList.add("captured");
+      } else {
+        valEl.textContent = "—";
+        trackCompany.classList.remove("captured");
+      }
+    }
+  }
+}
+
+function updateDispatchButton(readyToSend) {
+  if (!directDispatchBtn) return;
+
+  if (isContactDispatched) {
+    directDispatchBtn.disabled = true;
+    directDispatchBtn.classList.remove("ready");
+    directDispatchBtn.innerHTML = "<span>✓ Dispatched to Deepan's Gmail</span>";
+    if (dispatchHint) {
+      dispatchHint.textContent = "Your inquiry has been delivered directly to Deepan's Gmail.";
+    }
+    return;
+  }
+
+  const canDispatch = Boolean(
+    readyToSend || 
+    (contactLead.email && (contactLead.name || contactLead.message))
+  );
+
+  if (canDispatch) {
+    directDispatchBtn.disabled = false;
+    directDispatchBtn.classList.add("ready");
+    if (dispatchHint) {
+      dispatchHint.textContent = "Ready! Click above to dispatch your message straight to Deepan's Gmail.";
+    }
+  } else if (contactLead.email) {
+    directDispatchBtn.disabled = true;
+    directDispatchBtn.classList.remove("ready");
+    if (dispatchHint) {
+      dispatchHint.textContent = "Almost there! Please share your name or inquiry requirement.";
+    }
+  } else {
+    directDispatchBtn.disabled = true;
+    directDispatchBtn.classList.remove("ready");
+    if (dispatchHint) {
+      dispatchHint.textContent = "Provide your email & message to enable 1-click dispatch.";
+    }
+  }
+}
+
+function appendContactVisitorMessage(text) {
+  if (!contactMessages) return;
+  const msgEl = document.createElement("div");
+  msgEl.className = "c-msg visitor";
+  msgEl.textContent = text;
+  contactMessages.appendChild(msgEl);
+  contactMessages.scrollTop = contactMessages.scrollHeight;
+  return msgEl;
+}
+
+function appendContactAgentMessage(text) {
+  if (!contactMessages) return;
+  const msgEl = document.createElement("div");
+  msgEl.className = "c-msg agent";
+
+  const authorEl = document.createElement("div");
+  authorEl.className = "msg-author";
+  authorEl.textContent = "Deepan's Concierge";
+
+  const bodyEl = document.createElement("div");
+  bodyEl.className = "msg-body";
+  bodyEl.textContent = text;
+
+  msgEl.appendChild(authorEl);
+  msgEl.appendChild(bodyEl);
+  contactMessages.appendChild(msgEl);
+  contactMessages.scrollTop = contactMessages.scrollHeight;
+  return msgEl;
+}
+
+function appendContactSystemMessage(text) {
+  if (!contactMessages) return;
+  const msgEl = document.createElement("div");
+  msgEl.className = "c-msg system";
+  msgEl.textContent = text;
+  contactMessages.appendChild(msgEl);
+  contactMessages.scrollTop = contactMessages.scrollHeight;
+  return msgEl;
+}
+
+async function sendContactMessage(text) {
+  if (!text || isContactSending) return;
+  isContactSending = true;
+
+  // Add user message to UI & history
+  appendContactVisitorMessage(text);
+  contactHistory.push({ role: "user", content: text });
+  contactTranscript.push({ role: "user", content: text });
+
+  // Disable inputs while processing
+  if (contactChatInput) contactChatInput.disabled = true;
+  if (contactChatSubmit) contactChatSubmit.disabled = true;
+
+  // Render typing state
+  let typingEl = null;
+  if (contactMessages) {
+    typingEl = document.createElement("div");
+    typingEl.className = "c-msg agent";
+    typingEl.innerHTML = `
+      <div class="msg-author">Deepan's Concierge</div>
+      <div class="msg-body">Analyzing & formulating reply...</div>
+    `;
+    contactMessages.appendChild(typingEl);
+    contactMessages.scrollTop = contactMessages.scrollHeight;
+  }
+
+  try {
+    const res = await fetch("/api/contact/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: text,
+        history: contactHistory.slice(-8),
+        lead: contactLead
+      })
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server returned HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    if (typingEl) typingEl.remove();
+
+    // Update lead state if fields extracted
+    if (data.lead && typeof data.lead === "object") {
+      ["name", "email", "company", "message"].forEach(field => {
+        if (data.lead[field] && typeof data.lead[field] === "string" && data.lead[field].trim()) {
+          contactLead[field] = data.lead[field].trim();
+        }
+      });
+    }
+
+    updateContactHUD();
+    updateDispatchButton(data.ready_to_send);
+
+    const reply = data.reply || "Thanks for your message! Deepan will get back to you shortly.";
+    appendContactAgentMessage(reply);
+    contactHistory.push({ role: "assistant", content: reply });
+    contactTranscript.push({ role: "assistant", content: reply });
+
+  } catch (err) {
+    console.error("Contact Concierge error:", err);
+    if (typingEl) typingEl.remove();
+    appendContactAgentMessage(
+      "I encountered a temporary connection issue. You can still reach Deepan directly at deepksami@gmail.com!"
+    );
+  } finally {
+    isContactSending = false;
+    if (contactChatInput) {
+      contactChatInput.disabled = false;
+      contactChatInput.value = "";
+      contactChatInput.focus();
+    }
+    if (contactChatSubmit) {
+      contactChatSubmit.disabled = false;
+    }
+  }
+}
+
+// Bind Contact Form Submission
+if (contactChatForm) {
+  contactChatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!contactChatInput) return;
+    const msg = contactChatInput.value.trim();
+    if (!msg) return;
+    sendContactMessage(msg);
+  });
+}
+
+// Bind Quick Topic Chips
+contactChips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    const starterText = chip.getAttribute("data-contact-starter");
+    if (!starterText || isContactSending) return;
+    sendContactMessage(starterText);
+  });
+});
+
+// Bind 1-Click Direct Dispatch to Gmail
+if (directDispatchBtn) {
+  directDispatchBtn.addEventListener("click", async () => {
+    if (isContactSending || isContactDispatched || directDispatchBtn.disabled) return;
+
+    const canSubmit = contactLead.email || contactLead.message;
+    if (!canSubmit) return;
+
+    try {
+      directDispatchBtn.disabled = true;
+      const originalHtml = directDispatchBtn.innerHTML;
+      directDispatchBtn.innerHTML = "<span>✉️ Dispatching to Gmail...</span>";
+      if (dispatchHint) {
+        dispatchHint.textContent = "Connecting to mail server and routing to Deepan's Gmail...";
+      }
+
+      const res = await fetch("/api/contact/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lead: contactLead,
+          transcript: contactTranscript
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        isContactDispatched = true;
+        directDispatchBtn.classList.remove("ready");
+        directDispatchBtn.disabled = true;
+        directDispatchBtn.innerHTML = "<span>✓ Dispatched to Deepan's Gmail</span>";
+        if (dispatchHint) {
+          dispatchHint.textContent = "Your inquiry has been successfully delivered to Deepan's Gmail.";
+        }
+
+        if (dispatchBanner) {
+          dispatchBanner.style.display = "flex";
+          if (dispatchBannerDetail && data.message) {
+            dispatchBannerDetail.textContent = data.message;
+          }
+          dispatchBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        appendContactSystemMessage(
+          "✓ Inquiry successfully dispatched to Deepan's personal Gmail (deepksami@gmail.com)! He will review and respond shortly."
+        );
+      } else {
+        directDispatchBtn.disabled = false;
+        directDispatchBtn.innerHTML = originalHtml;
+        if (dispatchHint) {
+          dispatchHint.textContent = data.error || "Could not dispatch. Please try again.";
+        }
+      }
+    } catch (err) {
+      console.error("Direct dispatch failed:", err);
+      directDispatchBtn.disabled = false;
+      directDispatchBtn.innerHTML = '✉️ <span>Dispatch to Deepan\'s Gmail</span>';
+      if (dispatchHint) {
+        dispatchHint.textContent = "Dispatch failed. Please email deepksami@gmail.com directly.";
+      }
+    }
+  });
+}
