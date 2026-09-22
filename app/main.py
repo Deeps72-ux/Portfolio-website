@@ -72,6 +72,19 @@ async def projects():
     return {
         "projects": [
             {
+                "id": "swiggybite",
+                "title": "SwiggyBite: AI Food Ordering Agent",
+                "type": "MCP Integration / AI Agent",
+                "category": "agents",
+                "badge": "Swiggy MCP",
+                "description": "Autonomous food-ordering agent built on Swiggy's MCP platform using OAuth 2.1 + PKCE, OpenAI Agents SDK, and streamable HTTP transport across 4 Swiggy servers (Food, Instamart, Dineout, Scenes) with 66 tools.",
+                "technologies": ["Python", "OpenAI Agents SDK", "Swiggy MCP", "OAuth 2.1", "FastAPI", "Streamable HTTP"],
+                "demo_url": "https://swiggybite-food-agent.onrender.com",
+                "github_url": "https://github.com/Deeps72-ux/swiggybite-food-agent",
+                "featured": True,
+                "is_live": True,
+            },
+            {
                 "id": "nexusgraph",
                 "title": "NexusGraph: Multi-Agent Orchestrator",
                 "type": "Agentic AI / LangGraph",

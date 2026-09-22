@@ -66,5 +66,9 @@
   {
     "source": "Certifications",
     "text": "I hold Microsoft Certified: Azure Developer Associate (AZ-204, Certification ID: E83442-7985BF) and Microsoft Certified: Azure Fundamentals (AZ-900, Certification ID: 3672EB-85BFR0)."
+  },
+  {
+    "source": "Project: SwiggyBite",
+    "text": "SwiggyBite is an AI Food Ordering Agent built on Swiggy's MCP (Model Context Protocol) platform as part of my Swiggy Builders Club application. It uses the OpenAI Agents SDK (Python) with streamable HTTP transport, OAuth 2.1 + PKCE authentication, and connects to all 4 Swiggy MCP servers — Food (20 tools), Instamart (19 tools), Dineout (12 tools), and Scenes (15 tools) — providing access to 66 tools total. The agent handles the full food-ordering journey: get_addresses → search_restaurants → get_restaurant_menu → add_to_cart → get_cart → place_order → track_order. The technology stack includes Python, OpenAI Agents SDK, Swiggy MCP, OAuth 2.1 + PKCE, FastAPI, and Streamable HTTP. The source code is available at https://github.com/Deeps72-ux/swiggybite-food-agent."
   }
 ]

@@ -915,6 +915,20 @@ const projectFiltersContainer = document.getElementById("projectFilters");
 
 // Interactive simulation sequences for each personal project
 const PROJECT_SANDBOX_CONFIGS = {
+  swiggybite: {
+    defaultPrompt: "Order chicken biryani from the best rated restaurant near HSR Layout",
+    runtime: "OpenAI Agents SDK + Swiggy MCP (OAuth 2.1)",
+    steps: [
+      { type: "prompt", text: "> [SwiggyBite Agent] MCP handshake: POST mcp.swiggy.com/food" },
+      { type: "node", text: "⚡ [OAuth 2.1 + PKCE] Bearer token validated. Session active (5-day TTL)." },
+      { type: "node", text: "⚡ [get_addresses] Retrieved 3 saved delivery addresses. Selected: HSR Layout, Bangalore." },
+      { type: "node", text: "⚡ [search_restaurants] Found 12 restaurants near \"HSR Layout\" matching \"biryani\"." },
+      { type: "node", text: "⚡ [get_restaurant_menu] Loaded menu for \"Meghana Foods\" — 84 items across 12 categories." },
+      { type: "node", text: "⚡ [add_to_cart] Added \"Andhra Chicken Biryani\" × 2 to cart. Cart total: ₹598." },
+      { type: "success", text: "✓ [place_order] Order #SWG-2026-84721 placed via COD. ETA: 32 min." },
+      { type: "output", text: "🚀 [track_order] Live status: Preparing → Out for delivery. 4 Swiggy servers • 66 tools available." }
+    ]
+  },
   nexusgraph: {
     defaultPrompt: "Coordinate sub-agents to synthesize API schema and self-heal failed query",
     runtime: "FastAPI + LangGraph Stateful Engine",
