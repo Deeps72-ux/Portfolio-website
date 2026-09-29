@@ -54,15 +54,19 @@ async def health():
 @app.get("/resume")
 @app.get("/api/resume")
 async def get_resume():
-    resume_path = STATIC_DIR / "Deepan_Kulandaisami_Resume.pdf"
+    resume_path = STATIC_DIR / "Deepan_Kulandaisami_Resume_29092026.pdf"
     if not resume_path.exists():
-        return {"error": "Resume file not found."}
+        candidates = sorted(STATIC_DIR.glob("Deepan_Kulandaisami_Resume*.pdf"), reverse=True)
+        if candidates:
+            resume_path = candidates[0]
+        else:
+            return {"error": "Resume file not found."}
     return FileResponse(
         resume_path,
         media_type="application/pdf",
-        filename="Deepan_Kulandaisami_Resume.pdf",
+        filename=resume_path.name,
         headers={
-            "Content-Disposition": 'inline; filename="Deepan_Kulandaisami_Resume.pdf"',
+            "Content-Disposition": f'inline; filename="{resume_path.name}"',
             "Cache-Control": "no-cache",
         },
     )
